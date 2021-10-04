@@ -11,16 +11,20 @@ vim.g.termguicolors = true
 
 vim.opt.backup = false
 vim.opt.cmdheight = 1
+vim.opt.colorcolumn = "100"
 vim.opt.errorbells = false
 vim.opt.expandtab = true
 vim.opt.guicursor={}
+vim.opt.guifont = "Hack Nerd Font Mono:h14"
 vim.opt.hidden = true
 vim.opt.ignorecase = true
 vim.opt.incsearch = true
+vim.opt.hlsearch = false
 vim.opt.nu = true
 vim.opt.relativenumber = true
 vim.opt.scrolloff = 10
 vim.opt.shiftwidth = indent
+vim.opt.signcolumn = "yes"
 vim.opt.smartcase = true
 vim.opt.smartindent = true
 vim.opt.softtabstop = indent
@@ -33,6 +37,7 @@ vim.opt.undofile = true
 vim.opt.updatetime = 50
 vim.opt.wildmode = "longest:full,full"
 vim.opt.wrap = false
+
 
 cmd([[
   augroup packer_user_config

@@ -6,3 +6,7 @@ require("neogit").setup({
     hunk = { "", "" },
   },
 })
+
+local util = require("util")
+
+util.nnoremap('<Leader>ng', ':Neogit<CR>')
