@@ -1,8 +1,17 @@
-local util = require("util")
-local cmp = require("cmp")
-vim.o.completeopt = "menuone,noselect"
+vim.opt.completeopt = {"menu", "menuone", "noselect" }
 
-cmp.setup({
+vim.opt.shortmess:append "c"
+
+local lspkind = require "lspkind"
+lspkind.init()
+
+-- local M = {}
+
+-- function M.config()
+  -- local util = require("util")
+local cmp = require("cmp")
+
+cmp.setup {
   enabled = true,
   autocomplete = true,
   debug = false,
@@ -32,15 +41,53 @@ cmp.setup({
   },
 
   sources = {
-    { name = "buffer" },
+    { name = "nvim_lua" },
+
+    { name = "nvim_lsp", priority = 10 },
     { name = "path" },
-    { name = "nvim_lsp" },
-    { name = "neorg" },
+    { name = "luasnip"},
+    { name = "buffer", keyword_length = 5, max_item_count = 15 },
+    -- { name = "neorg" },
   },
 
-})
+  snippet = {
+    expand = function(args)
+      require("luasnip").lsp_expand(args.body)
+    end,
+  },
+
+  formatting = {
+    format = lspkind.cmp_format {
+      with_text = true,
+      menu = {
+        buffer = "[buf]",
+        nvim_lsp = "[LSP]",
+        nvim_lua = "[api]",
+        path = "[path]",
+        luasnip = "[snip]",
+      },
+    },
+  },
+
+  experimental = {
+    native_menu = false,
+    ghost_text = true,
+  },
+
+}
+-- [[
+-- " Disable cmp for a buffer
+-- autocmd FileType TelescopePrompt lua require('cmp').setup.buffer { enabled = false }
+-- ]]
+
+-- require("luasnip.loaders.from_vscode").lazy_load({
+--     paths = snippets_paths(),
+--     include = nil,  -- Load all languages
+--     exclude = {}
+-- })
 
 
+-- return M
 -- util.inoremap("<C-Space>", "cmp#complete()", { expr = true })
 -- util.inoremap("<C-e>", "cmp#close('<C-e>')", { expr = true })
 

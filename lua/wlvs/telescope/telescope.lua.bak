@@ -1,6 +1,8 @@
 local actions = require('telescope.actions')
 local telescope = require("telescope")
 
+local M = {}
+
 telescope.setup({
   extensions = { 
     fzy_native = { override_generic_sorter = false, override_file_sorter = true },
@@ -21,10 +23,6 @@ telescope.setup({
 })
 
 telescope.load_extension("fzy_native")
-telescope.load_extension("z")
-
-
-local M = {}
 
 M.search_dotfiles = function()
     require("telescope.builtin").find_files({

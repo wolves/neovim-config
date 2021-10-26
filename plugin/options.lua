@@ -38,6 +38,15 @@ vim.opt.updatetime = 50
 vim.opt.wildmode = "longest:full,full"
 vim.opt.wrap = false
 
+vim.g.completion_chain_complete_list = {
+	default = {
+		{ complete_items = { "lsp", "path", "buffers", "snippet" } },
+		{ mode = "<c-p>" },
+		{ mode = "<c-n>" },
+	},
+	TelescopePrompt = {},
+	--frecency = {},
+}
 
 cmd([[
   augroup packer_user_config

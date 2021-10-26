@@ -8,7 +8,7 @@ presets.objects["a("] = nil
 wk.setup({ show_help = false, triggers = "auto", plugins = { spelling = true }, key_labels = { ["<leader>"] = "SPC" } })
 
 util.inoremap("<C-c>", "<esc>")
-util.nnoremap("<M-c>", ":lua print('asdf')<CR>")
+--util.nnoremap("<M-c>", ":lua print('asdf')<CR>")
 
 -- Switch buffers with tab
 util.nnoremap("<tab>", ":bnext<cr>")

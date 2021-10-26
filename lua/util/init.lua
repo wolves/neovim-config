@@ -1,7 +1,3 @@
-_G.dump = function(...)
-  print(vim.inspect(...))
-end
-
 local M = {}
 
 M.functions = {}
