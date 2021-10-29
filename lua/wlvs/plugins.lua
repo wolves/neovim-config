@@ -1,13 +1,13 @@
 vim.cmd [[packadd packer.nvim]]
 -- vim.cmd [[packadd vimball]]
 
-local has = function(x)
-  return vim.fn.has(x) == 1
-end
+-- local has = function(x)
+--   return vim.fn.has(x) == 1
+-- end
 
-local executable = function(x)
-  return vim.fn.executable(x) == 1
-end
+-- local executable = function(x)
+--   return vim.fn.executable(x) == 1
+-- end
 
 return require("packer").startup {
   function(use)
@@ -94,7 +94,7 @@ return require("packer").startup {
     }
 
     -- PR Filter is:open is:pr review-requested:wolves archived:false
-    use { 
+    use {
       "nvim-telescope/telescope-github.nvim",
       after = { 'telescope.nvim' },
       config = function()
@@ -151,7 +151,7 @@ return require("packer").startup {
       -- "Th3Whit3Wolf/onebuddy",
       -- "christianchiarulli/nvcode-color-schemes.vim",
       -- "Th3Whit3Wolf/one-nvim"
-  
+
       "folke/tokyonight.nvim",
       -- event = "VimEnter",
       config = function()
@@ -188,7 +188,7 @@ return require("packer").startup {
        require("wlvs.bufferline")
      end,
    })
- 
+
    -- Terminal
    use({
      "akinsho/nvim-toggleterm.lua",
@@ -197,31 +197,23 @@ return require("packer").startup {
        require("wlvs.terminal")
      end,
    })
- 
+
    -- Smooth Scrolling
-   use({
-     "karb94/neoscroll.nvim",
-     keys = {
-       "<C-u>", "<C-d>", "gg", "G", "zz"
-     },
-     config = function()
-       require("wlvs.scroll")
-     end,
-   })
- 
+    use { "karb94/neoscroll.nvim",
+      config = function()
+        require("wlvs.scroll")
+      end,
+    }
+
    -- Statusline
-   use({
-     "hoob3rt/lualine.nvim",
-     event = "VimEnter",
-     config = function()
-       require("wlvs.lualine")
-     end,
-     requires = {
-       "arkav/lualine-lsp-progress",
-       { "kyazdani42/nvim-web-devicons", opt = true },
-     }
-   })
- 
+   use {
+    'nvim-lualine/lualine.nvim',
+    config = function()
+      require("wlvs.lualine")
+    end,
+    requires = {'kyazdani42/nvim-web-devicons', opt = true}
+   }
+
    use({
      "norcalli/nvim-colorizer.lua",
      event = "BufReadPre",
@@ -229,8 +221,8 @@ return require("packer").startup {
        require("wlvs.colorizer")
      end,
    })
- 
- 
+
+
     use({
       "folke/which-key.nvim",
       event = "VimEnter",
@@ -240,7 +232,7 @@ return require("packer").startup {
     })
 
    use({ "mbbill/undotree", cmd = "UndotreeToggle" })
-    
+
 
   --
   -- WIP: LANGUAGE:
@@ -272,9 +264,9 @@ return require("packer").startup {
   end
 
   -- use { "elzr/vimjson", ft = "json" }
-  
-  use({ 
-    "iamcco/markdown-preview.nvim", 
+
+  use({
+    "iamcco/markdown-preview.nvim",
     run = function()
       vim.fn["mkdp#util#install"]()
     end,
@@ -297,7 +289,7 @@ return require("packer").startup {
     -- requires = {
     -- },
     -- run = function()
-      -- "L3MON4D3/LuaSnip" 
+      -- "L3MON4D3/LuaSnip"
       -- "hrsh7th/cmp-buffer"
       -- "hrsh7th/cmp-path"
       -- "hrsh7th/cmp-nvim-lua"
@@ -316,12 +308,12 @@ return require("packer").startup {
   -- Cool tags based viewer
   --   :Vista  <-- Opens up a really cool sidebar with info about file.
   -- use { "liuchengxu/vista.vim", cmd = "Vista" }
-  
+
   -- Find and replace
   -- use "windwp/nvim-spectre"
 		--
-  -- 
-  -- 
+  --
+  --
   -- TODO: DEBUGGING
 
   -- Debug adapter protocol
@@ -332,7 +324,7 @@ return require("packer").startup {
   -- use "theHamsta/nvim-dap-virtual-text"
   -- use "mfussenegger/nvim-dap-python"
   -- use "nvim-telescope/telescope-dap.nvim"
-  
+
   -- Pocco81/DAPInstall.nvim
 
 
@@ -352,7 +344,7 @@ return require("packer").startup {
   -- use "tpope/vim-abolish" -- Cool things with words!
   -- use "tpope/vim-characterize"
   -- use { "tpope/vim-dispatch", cmd = { "Dispatch", "Make" } }
-  -- 
+  --
   use {
     "AndrewRadev/splitjoin.vim",
     keys = { "gJ", "gS" },
@@ -418,7 +410,7 @@ return require("packer").startup {
   --
   -- Markdown
 
-  -- use({ 
+  -- use({
   --   "nvim-neorg/neorg",
   --   config = function()
   --     require("wlvs.neorg")
