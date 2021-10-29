@@ -1,3 +1,5 @@
+local util = require("util")
+
 local has_lsp, lspconfig = pcall(require, "lspconfig")
 if not has_lsp then
   return
@@ -42,9 +44,24 @@ local filetype_attach = setmetatable({
 
 local custom_attach = function(client)
   local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+
   nvim_status.on_attach(client)
 
+  util.nnoremap("<space>cr", ":lua vim.lsp.buf.rename()<CR>", {buffer = 0})
   telescope_mapper("<space>ca", "lsp_code_actions", nil, true)
+
+  util.nnoremap("gd", ":lua vim.lsp.buf.definition()<CR>", {buffer = 0})
+  util.nnoremap("gD", ":lua vim.lsp.buf.declaration()<CR>", {buffer = 0})
+  util.nnoremap("gT", ":lua vim.lsp.buf.type_definition()<CR>", {buffer = 0})
+
+  util.nnoremap("<space>gI", ":lua handlers.implementation()<CR>", {buffer = 0})
+  util.nnoremap("<space>lr", ":lua R('tj.lsp.codelens').run()<CR>", {buffer=0})
+  util.nnoremap("<space>rr", "LspRestart", {buffer=0})
+
+  telescope_mapper("gr", "lsp_references", nil, true)
+  telescope_mapper("gI", "lsp_implementations", nil, true)
+  telescope_mapper("<space>wd", "lsp_document_symbols", { ignore_filename = true }, true)
+  telescope_mapper("<space>ww", "lsp_dynamic_workspace_symbols", { ignore_filename = true }, true)
 
   -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
