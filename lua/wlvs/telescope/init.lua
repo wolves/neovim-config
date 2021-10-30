@@ -28,7 +28,7 @@ local _ = pcall(require, "nvim-nonicons")
 local M = {}
 
 function M.edit_neovim()
-  local opt_with_preview, opts_without_preview
+  local opts_with_preview, opts_without_preview
 
   opts_with_preview = {
     prompt_title = "~ dotfiles ~",
