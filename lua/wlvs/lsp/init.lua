@@ -55,7 +55,7 @@ local custom_attach = function(client)
   util.nnoremap("gT", ":lua vim.lsp.buf.type_definition()<CR>", {buffer = 0})
 
   util.nnoremap("<space>gI", ":lua handlers.implementation()<CR>", {buffer = 0})
-  util.nnoremap("<space>lr", ":lua R('tj.lsp.codelens').run()<CR>", {buffer=0})
+  util.nnoremap("<space>lr", ":lua R('wlvs.lsp.codelens').run()<CR>", {buffer=0})
   util.nnoremap("<space>rr", "LspRestart", {buffer=0})
 
   telescope_mapper("gr", "lsp_references", nil, true)
