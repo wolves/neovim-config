@@ -15,7 +15,8 @@ local config = {
       {
         'diff',
         separator = {left = '', right = ''},
-        color = {bg = '#1f2335'}
+        color = {bg = '#1f2335'},
+        always_visible = true
       },
       {'branch', separator = '', fmt = function(str) return str:sub(1,9) end },
     },
