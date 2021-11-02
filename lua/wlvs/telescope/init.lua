@@ -31,7 +31,7 @@ function M.edit_neovim()
   local opts_with_preview, opts_without_preview
 
   opts_with_preview = {
-    prompt_title = "~ dotfiles ~",
+    prompt_title = "❱ dotfiles ❰",
     shorten_path = false,
     cwd = "~/.config/nvim",
 
@@ -66,9 +66,53 @@ function M.edit_neovim()
   require("telescope.builtin").file_browser(opts_with_preview)
 end
 
+function M.config_reload()
+  -- Telescope will give us something like ju/colors.lua,
+  -- so this function convert the selected entry to
+  -- the module name: ju.colors
+  local function get_module_name(s)
+    local module_name;
+
+    module_name = s:gsub("%.lua", "")
+    module_name = module_name:gsub("%/", ".")
+    module_name = module_name:gsub("%.init", "")
+
+    return module_name
+  end
+
+  -- local prompt_title = "~ neovim modules ~"
+  local prompt_title = "❱ neovim modules ❰"
+
+  -- sets the path to the lua folder
+  local path = "~/.config/nvim/lua"
+
+  local opts = {
+    prompt_title = prompt_title,
+    cwd = path,
+
+    attach_mappings = function(_, map)
+     -- Adds a new map to ctrl+e.
+      map("i", "<c-e>", function(_)
+        -- these two a very self-explanatory
+        local entry = require("telescope.actions.state").get_selected_entry()
+        local name = get_module_name(entry.value)
+
+        -- call the helper method to reload the module
+        -- and give some feedback
+        R(name)
+        P(name .. " RELOADED!!!")
+      end)
+
+      return true
+    end
+  }
+    -- call the builtin method to list files
+  require('telescope.builtin').find_files(opts)
+end
+
 function M.sunbird_piq()
   require("telescope.builtin").find_files {
-    prompt_title = "› sunbird ‹",
+    prompt_title = "❱ sunbird ❰",
     shorten_path = false,
     cwd = "~/code/ruby/poweriq_web/",
 
@@ -82,7 +126,7 @@ end
 
 function M.sunbird_ui()
   require("telescope.builtin").find_files {
-    prompt_title = "› sunbird UI ‹",
+    prompt_title = "❱ sunbird UI ❰",
     shorten_path = false,
     cwd = "~/code/sunbird/seven_ui/",
 
@@ -98,7 +142,7 @@ function M.edit_dots()
   require("telescope.builtin").find_files {
     shorten_path = false,
     cwd = "~/.dotfiles/",
-    prompt = "~ dotfiles ~",
+    prompt_title = "❱ dotfiles ❰",
     hidden = false,
 
     layout_strategy = "horizontal",
@@ -112,7 +156,7 @@ function M.edit_kitty()
   require("telescope.builtin").find_files {
     shorten_path = false,
     cwd = "~/.config/kitty/",
-    prompt = "~ kitty ~",
+    prompt_title = "❱ kitty ❰",
     hidden = false,
 
     layout_strategy = "horizontal",
@@ -153,7 +197,7 @@ end
 function M.grep_prompt()
   require("telescope.builtin").grep_string {
     path_display = { "shorten" },
-    search = vim.fn.input "Grep String > ",
+    search = vim.fn.input "Grep String ❱ ",
   }
 end
 
@@ -222,6 +266,28 @@ function M.lsp_code_actions()
   }
 
   require("telescope.builtin").lsp_code_actions(opts)
+end
+
+function M.lsp_references()
+  require("telescope.builtin").lsp_references {
+    layout_strategy = "vertical",
+    layout_config = {
+      prompt_position = "top",
+    },
+    sorting_strategy = "ascending",
+    ignore_filename = false,
+  }
+end
+
+function M.lsp_implementations()
+  require("telescope.builtin").lsp_implementations {
+    layout_strategy = "vertical",
+    layout_config = {
+      prompt_position = "top",
+    },
+    sorting_strategy = "ascending",
+    ignore_filename = false,
+  }
 end
 
 return M

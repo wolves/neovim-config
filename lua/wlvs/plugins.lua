@@ -1,4 +1,4 @@
-vim.cmd [[packadd packer.nvim]]
+-- vim.cmd [[packadd packer.nvim]]
 -- vim.cmd [[packadd vimball]]
 
 -- local has = function(x)
@@ -9,112 +9,133 @@ vim.cmd [[packadd packer.nvim]]
 --   return vim.fn.executable(x) == 1
 -- end
 
-return require("packer").startup {
-  function(use)
-
-    use "wbthomason/packer.nvim"
+-- return require("packer").startup {
+local spec = function(use)
 
     use {
-        'nvim-treesitter/nvim-treesitter',
-        event = { 'BufRead', 'BufNewFile' },
-        requires = {
-            {
-                'nvim-treesitter/nvim-treesitter-refactor',
-                after = 'nvim-treesitter',
-            },
-            {
-                'nvim-treesitter/nvim-treesitter-textobjects',
-                after = 'nvim-treesitter',
-            },
-            {
-                'lewis6991/spellsitter.nvim',
-                after = 'nvim-treesitter',
-                config = function()
-                    require('spellsitter').setup {
-                        hl = 'SpellBad',
-                        captures = {},
-                    }
-                end,
-                disable = true, -- not working for now
-            },
-        },
-        run = ':TSUpdate',
-        config = function()
-            require('wlvs.treesitter').config()
-        end,
+      "wbthomason/packer.nvim",
+      opt = true
     }
-    use { 'neovim/nvim-lspconfig' }
-    use { 'nvim-lua/lsp-status.nvim' }
-    use { 'nvim-lua/lsp_extensions.nvim' }
-    use { 'onsails/lspkind-nvim' }
-    use { 'ray-x/lsp_signature.nvim' }
 
-    use { 'L3MON4D3/LuaSnip' }
-
-     -- Completion
-    use "hrsh7th/nvim-cmp"
-    use "hrsh7th/cmp-buffer"
-    use "hrsh7th/cmp-path"
-    use "hrsh7th/cmp-nvim-lua"
-    use "hrsh7th/cmp-nvim-lsp"
-    use "saadparwaiz1/cmp_luasnip"
-    -- use "tamago324/cmp-zsh"
-
-    use { "nvim-lua/plenary.nvim" }
+    -- DEPS
+    use { "tami5/sql.nvim" }
     use { "nvim-lua/popup.nvim" }
+    use { "nvim-lua/plenary.nvim" }
 
+    -- UX
+
+   -- Smooth Scrolling
+    use { "karb94/neoscroll.nvim",
+      config = function()
+        require("wlvs.scroll")
+      end,
+    }
+    use {"ThePrimeagen/harpoon"}
+
+    -- UI
     use {
       "folke/lsp-trouble.nvim",
-      cmd = "LspTrouble",
+      requires = "kyazdani42/nvim-web-devicons",
       config = function()
-        -- Can use P to toggle auto movement
-        require("trouble").setup {
-          auto_preview = false,
-          auto_fold = true,
-        }
+        require("trouble").setup {}
       end,
     }
 
+
+    -- TELESCOPE
     use {
-      "nvim-telescope/telescope.nvim"
+      "nvim-telescope/telescope.nvim",
+      config = function()
+        require("wlvs.telescope.setup").setup()
+      end,
+      requires = { "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim" },
     }
 
-    -- use {
-    --   "nvim-telescope/telescope-frecency.nvim",
-    --   after = { 'telescope.nvim' },
-    --   requires = 'tami5/sql.nvim',
-    -- }
+    use {
+      "nvim-telescope/telescope-frecency.nvim",
+      requires = { "nvim-telescope/telescope.nvim" },
+      config = function()
+        require("telescope").load_extension "frecency"
+      end,
+    }
+    use {
+      "nvim-telescope/telescope-symbols.nvim",
+      requires = { "nvim-telescope/telescope.nvim" },
+    }
 
     use {
       "nvim-telescope/telescope-fzy-native.nvim",
-      after = { 'telescope.nvim' },
-      config = function()
-        require('telescope').load_extension("fzy_native")
-      end,
+      requires = { "nvim-telescope/telescope.nvim" },
     }
+
+    -- use { "nvim-telescope/telescope-fzf-writer.nvim" }
+    -- use { "nvim-telescope/telescope-packer.nvim" }
 
     -- PR Filter is:open is:pr review-requested:wolves archived:false
-    use {
-      "nvim-telescope/telescope-github.nvim",
-      after = { 'telescope.nvim' },
-      config = function()
-        require('telescope').load_extension("gh")
-      end,
-    }
+    -- use { "nvim-telescope/telescope-github.nvim"}
 
-    -- use {
-      -- "nvim-telescope/telescope-symbols.nvim",
-      -- after = { 'telescope.nvim' },
-      -- config = function()
-        -- require('telescope').load_extension("symbols")
-      -- end,
-    -- }
     -- use { "nvim-telescope/telescope-hop.nvim" }
-    -- use { "nvim-telescope/telescope-packer.nvim" }
     -- use { "nvim-telescope/telescope-cheat.nvim" }
     -- use { "telescope-hacks.nvim" }
     -- use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
-    -- use { "nvim-telescope/telescope-fzf-writer.nvim" }
+
+
+    -- COMPLETION
+    use "hrsh7th/cmp-buffer"
+    use "hrsh7th/cmp-path"
+    use "hrsh7th/cmp-nvim-lsp"
+    use "hrsh7th/cmp-nvim-lua"
+    -- use "tamago324/cmp-zsh"
+    use {
+      "hrsh7th/nvim-cmp",
+      requires = {
+        'onsails/lspkind-nvim'
+        -- use { 'windwp/nvim-autopairs' }
+      },
+      config = function()
+        require("wlvs.nvim-cmp").setup()
+      end,
+    }
+
+    -- SNIPPETS
+    use { "hrsh7th/vim-vsnip" }
+
+    -- TREESITTER
+    use {
+      'nvim-treesitter/nvim-treesitter',
+      config = function()
+          require('wlvs.treesitter').setup()
+      end,
+    }
+    use {
+      "nvim-treesitter/playground",
+      requires = "nvim-treesitter",
+    }
+    use {
+      "nvim-treesitter/completion-treesitter",
+      requires = "nvim-treesitter",
+    }
+    use {
+      "nvim-treesitter/nvim-treesitter-refactor",
+      requires = "nvim-treesitter",
+    }
+    use {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+      requires = "nvim-treesitter",
+    }
+
+    -- LSP
+    use { 'neovim/nvim-lspconfig' }
+    use { 'nvim-lua/lsp-status.nvim' }
+    use { 'nvim-lua/lsp_extensions.nvim' }
+    use {
+      'onsails/lspkind-nvim',
+      config = function()
+        require("lspkind").init()
+      end,
+    }
+    -- use { 'ray-x/lsp_signature.nvim' }
+
 
     use {
       "antoinemadec/FixCursorHold.nvim",
@@ -161,21 +182,11 @@ return require("packer").startup {
 
     -- VIM EDITOR:
 
-    -- Little know features:
-    --   :SSave
-    --   :SLoad
-    --       These are wrappers for mksession that work great. I never have to use
-    --       mksession anymore or worry about where things are saved / loaded from.
-    use {
-      "mhinz/vim-startify",
-      cmd = { "SLoad", "SSave" },
-      config = function()
-        vim.g.startify_disable_at_vimenter = true
-      end,
-    }
-
-    -- Quickfix enhancements. See :help vim-qf
-    use { "romainl/vim-qf" }
+    -- Writing Plugins
+    -- somthing in here keeps crashing nvim
+    use {"preservim/vim-pencil"}
+    use {"folke/zen-mode.nvim"}
+    use {"folke/twilight.nvim"}
 
     use { "kyazdani42/nvim-tree.lua" }
 
@@ -192,18 +203,11 @@ return require("packer").startup {
    -- Terminal
    use({
      "akinsho/nvim-toggleterm.lua",
-     keys = "<C-t>",
      config = function()
        require("wlvs.terminal")
      end,
    })
 
-   -- Smooth Scrolling
-    use { "karb94/neoscroll.nvim",
-      config = function()
-        require("wlvs.scroll")
-      end,
-    }
 
    -- Statusline
    use {
@@ -240,15 +244,15 @@ return require("packer").startup {
   -- GO
   -- Testing out some options here. Need to determine the features I want...
   -- use({ "darrikonn/vim-gofmt" })
-  use({
-    "ray-x/go.nvim",
-    wants = "nvim-lspconfig",
-    requires = "neovim/nvim-lspconfig",
-    ft = "go",
-    config = function()
-      require("wlvs.golang")
-    end,
-  })
+  -- use({
+  --   "ray-x/go.nvim",
+  --   wants = "nvim-lspconfig",
+  --   requires = "neovim/nvim-lspconfig",
+  --   ft = "go",
+  --   config = function()
+  --     require("wlvs.golang")
+  --   end,
+  -- })
 
   --
   -- Typescript
@@ -280,24 +284,6 @@ return require("packer").startup {
     run = "yarn install"
   })
 
-  -- Completion
-  -- use({
-    -- "hrsh7th/nvim-cmp",
-    -- config = function()
-      -- require("wlvs.lsp.cmp")
-    -- end,
-    -- requires = {
-    -- },
-    -- run = function()
-      -- "L3MON4D3/LuaSnip"
-      -- "hrsh7th/cmp-buffer"
-      -- "hrsh7th/cmp-path"
-      -- "hrsh7th/cmp-nvim-lua"
-      -- "hrsh7th/cmp-nvim-lsp"
-      -- "saadparwaiz1/cmp_luasnip"
-    -- end,
-  -- })
-
 
   -- TODO --
   -- use "rofl.nvim"
@@ -307,7 +293,7 @@ return require("packer").startup {
 
   -- Cool tags based viewer
   --   :Vista  <-- Opens up a really cool sidebar with info about file.
-  -- use { "liuchengxu/vista.vim", cmd = "Vista" }
+  use { "liuchengxu/vista.vim", cmd = "Vista" }
 
   -- Find and replace
   -- use "windwp/nvim-spectre"
@@ -345,10 +331,7 @@ return require("packer").startup {
   -- use "tpope/vim-characterize"
   -- use { "tpope/vim-dispatch", cmd = { "Dispatch", "Make" } }
   --
-  use {
-    "AndrewRadev/splitjoin.vim",
-    keys = { "gJ", "gS" },
-  }
+  use { "AndrewRadev/splitjoin.vim" }
 
   -- TODO: Check out macvhakann/vim-sandwich - Quote: "TJ Devries"
   use "tpope/vim-surround" -- Surround text objects easily
@@ -356,24 +339,29 @@ return require("packer").startup {
   --
   --
   -- WIP: GIT
-
   use({
-    "TimUntersberger/neogit",
-    cmd = "Neogit",
+    "lewis6991/gitsigns.nvim",
+    event = "BufReadPre",
+    requires = { "nvim-lua/plenary.nvim" },
     config = function()
-      require("wlvs.neogit")
+      require("wlvs.gitsigns")
     end,
   })
-
+  use {
+    "ruifm/gitlinker.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("gitlinker").setup()
+    end,
+  }
   -- Github integration
-  if vim.fn.executable "gh" == 1 then
-    use "pwntester/octo.nvim"
-  end
-  use "ruifm/gitlinker.nvim"
-
-  -- Sweet message committer
-  -- use "rhysd/committia.vim"
-
+  use {
+    "pwntester/octo.nvim",
+    requires = { "nvim-telescope/telescope.nvim" },
+    config = function()
+      require("octo").setup {}
+    end
+  }
   use({
     "sindrets/diffview.nvim",
     cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles" },
@@ -381,20 +369,15 @@ return require("packer").startup {
       require("wlvs.diffview")
     end,
   })
-
-  -- Floating windows are awesome :)
-  -- use {
-    -- "rhysd/git-messenger.vim",
-    -- keys = "<Plug>(git-messenger)",
-  -- }
-
-  -- Git Gutter
   use({
-    "lewis6991/gitsigns.nvim",
-    event = "BufReadPre",
-    requires = { "nvim-lua/plenary.nvim" },
+    "TimUntersberger/neogit",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "sindrets/diffview.nvim",
+    },
+    cmd = "Neogit",
     config = function()
-      require("wlvs.gitsigns")
+      require("wlvs.neogit")
     end,
   })
 
@@ -406,6 +389,19 @@ return require("packer").startup {
     -- end,
     -- disable = true,
   -- }
+
+
+
+  -- Sweet message committer
+  -- use "rhysd/committia.vim"
+
+
+  -- Floating windows are awesome :)
+  -- use {
+    -- "rhysd/git-messenger.vim",
+    -- keys = "<Plug>(git-messenger)",
+  -- }
+
   --
   --
   -- Markdown
@@ -423,8 +419,6 @@ return require("packer").startup {
 
   --
   -- TODO: Check These Out Later
-  -- use "tjdevries/standard.vim"
-  -- use "tjdevries/conf.vim"
 
   -- use { "junegunn/fzf", run = "./install --all" }
   -- use { "junegunn/fzf.vim" }
@@ -446,11 +440,32 @@ return require("packer").startup {
     -- }
   -- end
 
-  end,
+end
 
-  config = {
-    display = {
-      -- open_fn = require("packer.util").float({ border = "single" })
-    },
+local config = {
+  display = {
+    -- open_fn = require("packer.util").float({ border = "single" })
+    -- open_fn = function()
+    --   local bufnr, winnr = require("window").floating_window { border = true, width_per = 0.8, height_per = 0.8 }
+    --   vim.api.nvim_set_current_win(winnr)
+    --   return bufnr, winnr
+    -- end,
+  -- profile = {
+  --   enable = true,
+  --   threshold = 1,
+  -- },
   },
 }
+
+-- Bootstrap Packer
+local install_path = string.format("%s/site/pack/packer/opt/packer.nvim", vim.fn.stdpath "data")
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  vim.notify "Downloading packer.nvim..."
+  vim.notify(vim.fn.system { "git", "clone", "https://github.com/wbthomason/packer.nvim", install_path })
+  vim.cmd "packadd! packer.nvim"
+  require("packer").startup { spec, config = config }
+  require("packer").sync()
+else
+  vim.cmd "packadd! packer.nvim"
+  require("packer").startup { spec, config = config }
+end

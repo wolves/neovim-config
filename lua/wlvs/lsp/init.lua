@@ -10,7 +10,7 @@ local lspconfig_util = require "lspconfig.util"
 local nvim_status = require 'lsp-status'
 
 local telescope_mapper = require "wlvs.telescope.mappings"
-local handlers = require "wlvs.lsp.handlers"
+-- local handlers = require "wlvs.lsp.handlers"
 
 local lspkind = require 'lspkind'
 local status = require 'wlvs.lsp.status'
@@ -27,7 +27,7 @@ local custom_init = function(client)
 end
 
 local filetype_attach = setmetatable({
-  go = function(client)
+  go = function(_)
     vim.cmd [[
       augroup lsp_buf_format
         au! BufWritePre <buffer>
@@ -54,9 +54,9 @@ local custom_attach = function(client)
   util.nnoremap("gD", ":lua vim.lsp.buf.declaration()<CR>", {buffer = 0})
   util.nnoremap("gT", ":lua vim.lsp.buf.type_definition()<CR>", {buffer = 0})
 
-  util.nnoremap("<space>gI", ":lua handlers.implementation()<CR>", {buffer = 0})
+  -- util.nnoremap("<space>gI", handlers.implementation, {buffer = 0})
   util.nnoremap("<space>lr", ":lua R('wlvs.lsp.codelens').run()<CR>", {buffer=0})
-  util.nnoremap("<space>rr", "LspRestart", {buffer=0})
+  util.nnoremap("<space>rr", "<cmd>LspRestart<CR>", {buffer=0})
 
   telescope_mapper("gr", "lsp_references", nil, true)
   telescope_mapper("gI", "lsp_implementations", nil, true)
@@ -87,8 +87,18 @@ local custom_attach = function(client)
   filetype_attach[filetype](client)
 end
 
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
 lsp.handlers['textDocument/publishDiagnostics'] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
-  virtual_text = false,
+  virtual_text = {
+    spacing = 4,
+    prefix = "",
+  },
   signs = true,
   update_in_insert = false,
   underline = true,
@@ -162,27 +172,27 @@ local servers = {
       "typescript.tsx",
     },
   },
-  -- gopls = {
-  --   cmd = { "gopls" },
-  --   -- settings = {
-  --   --   gopls = {
-  --   --     analyses = {
-  --   --       unusedparams = true,
-  --   --     },
-  --   --     staticcheck = true,
-  --   --     linksInHover = false,
-  --   --     codelens = {
-  --   --       generate = true,
-  --   --       gc_details = true,
-  --   --       regenerate_cgo = true,
-  --   --       tidy = true,
-  --   --       upgrade_depdendency = true,
-  --   --       vendor = true,
-  --   --     },
-  --   --     usePlaceholders = true,
-  --   --   },
-  --   -- },
-  -- },
+  gopls = {
+    cmd = { "gopls" },
+    settings = {
+      gopls = {
+        analyses = {
+          unusedparams = true,
+        },
+        staticcheck = true,
+        linksInHover = false,
+        codelenses = {
+          generate = true,
+          gc_details = true,
+          regenerate_cgo = true,
+          tidy = true,
+          upgrade_depdendency = true,
+          vendor = true,
+        },
+        usePlaceholders = true,
+      },
+    },
+  },
 }
 
 local setup_server = function(server, config)
@@ -209,49 +219,3 @@ end
 for server, config in pairs(servers) do
   setup_server(server, config)
 end
-
-
-
-  -- Typescript
-  -- lspconfig.tsserver.setup {
-  --   on_attach = function(client)
-  --       client.resolved_capabilities.document_formatting = false,
-  --       on_attach()
-  --   end,
-  --   capabilities = capabilities,
-  --   flags = { debounce_text_changes = 500 },
-  --   commands = {
-  --     OrganizeImports = {
-  --       function()
-  --         local params = {
-  --             command = '_typescript.organizeImports',
-  --             arguments = { vim.api.nvim_buf_get_name(0) },
-  --             title = '',
-  --         },
-  --         vim.lsp.buf.execute_command(params)
-  --       end,
-  --     },
-  --   },
-  -- }
-
-  -- GO
-  -- lspconfig.gopls.setup {
-  --     on_attach = on_attach,
-  --     capabilities = capabilities,
-  --     flags = { debounce_text_changes = 150 },
-  -- }
-
-  -- lspconfig.gopls.setup{
-  --     on_attach=on_attach,
-  --     cmd = {"gopls", "serve"},
-  --     settings = {
-  --         gopls = {
-  --             analyses = {
-  --                 unusedparams = true,
-  --             },
-  --             staticcheck = true,
-  --         },
-  --     },
-  -- }
-
-  -- lspconfig.svelte.setup{}

@@ -1,4 +1,14 @@
 require("neogit").setup({
+  integrations = {
+    diffview = true,
+  },
+  disable_commit_confirmation = true,
+    mappings = {
+      status = {
+        [">"] = "Toggle",
+      },
+    },
+
   signs = {
     -- { CLOSED, OPENED }
     section = { "", "" },

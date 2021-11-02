@@ -24,6 +24,8 @@ end
 
 -- Dotfiles
 map_tele("<leader>en", "edit_neovim")
+map_tele("<space>nr", "config_reload")
+
 map_tele("<leader>ez", "edit_dots")
 map_tele("<leader>ek", "edit_kitty")
 
@@ -46,10 +48,8 @@ map_tele("<space>gb", "git_branches")
 map_tele("<space>pb", "buffers")
 map_tele("<space>vh", "help_tags")
 
--- util.nnoremap("<Leader>pw", ":lua require('telescope.builtin').grep_string { search = vim.fn.expand('<cword>') }<CR>")
 
 -- util.nnoremap("<Leader>vn", ":lua require('config.telescope').search_notes()<CR>")
--- util.nnoremap("<Leader>vh", ":lua require('telescope.builtin').help_tags()<CR>")
 
 -- util.nnoremap("<Leader>gb", ":lua require('telescope.builtin').git_branches()<CR>")
 return map_tele

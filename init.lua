@@ -1,9 +1,9 @@
 -- WLVS
 
 -- Bootstrap Packer
-if require "wlvs.first_load"() then
-  return
-end
+-- if require "wlvs.first_load"() then
+--   return
+-- end
 
 -- Leader <space>
 -- Map Leader out of the gate to its in place for all future maps
@@ -23,7 +23,9 @@ require "wlvs.disable_builtin"
 
 require "util"
 
+require "wlvs.plugins"
+
 require "wlvs.lsp"
-require "wlvs.telescope.setup"
-require "wlvs.telescope.mappings"
+-- require "wlvs.telescope.setup"
+-- require "wlvs.telescope.mappings"
 -- require "wlvs"

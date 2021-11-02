@@ -17,17 +17,15 @@
 --     branch = "main"
 --   },
 -- }
-local M = {}
 
-function M.config()
-  vim.cmd [[packadd nvim-treesitter-refactor]]
-  vim.cmd [[packadd nvim-treesitter-textobjects]]
+local function setup()
   require('nvim-treesitter.configs').setup {
     ensure_installed = 'maintained',
+    ignore_install = {"haskell"},
     highlight = { enable = true, use_languagetree = true },
     indent = { enable = true },
     incremental_selection = {
-        enable = true,
+        enable = false,
         disable = {},
         keymaps = { -- mappings for incremental selection (visual mappings)
             init_selection = '<CR>', -- maps in normal mode to init the node/scope selection
@@ -94,6 +92,12 @@ function M.config()
             swap_previous = { ['<Leader><'] = '@parameter.inner' },
         },
     },
+    playground = {
+      enable = false,
+      updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+      persist_queries = false -- Whether the query persists across vim sessions
+    },
+    --ensure_installed = 'all', -- one of 'all', 'language', or a list of languages
     autopairs = { enable = true },
     -- ensure_installed =  {
     --   "bash",
@@ -115,4 +119,6 @@ function M.config()
   }
 end
 
-return M
+return {
+  setup = setup
+}

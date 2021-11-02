@@ -7,8 +7,7 @@ local presets = require("which-key.plugins.presets")
 presets.objects["a("] = nil
 wk.setup({ show_help = false, triggers = "auto", plugins = { spelling = true }, key_labels = { ["<leader>"] = "SPC" } })
 
-util.inoremap("<C-c>", "<esc>")
---util.nnoremap("<M-c>", ":lua print('asdf')<CR>")
+util.inoremap("<C-c>", "<esc>", {silent = true})
 
 -- Switch buffers with tab
 util.nnoremap("<tab>", ":bnext<cr>")
@@ -58,7 +57,7 @@ local leader = {
     c = { "<Cmd>Telescope git_commits<CR>", "commits" },
     b = "Branches",
     s = { "<Cmd>Telescope git_status<CR>", "status" },
-    d = { "<cmd>DiffviewOpen<cr>", "DiffView" },
+    -- d = { "<cmd>DiffviewOpen<cr>", "DiffView" },
   },
   ["h"] = {
     name = "+help",
@@ -87,5 +86,3 @@ local leader = {
 }
 
 wk.register(leader, { prefix = "<leader>" })
--- util.nnoremap('<C-t><C-t>', ':split term://go test -v<CR>')
--- util.nnoremap('<C-t><C-t><C-b>', ':split term://go test -bench=.<CR>')
