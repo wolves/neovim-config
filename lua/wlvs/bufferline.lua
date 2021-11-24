@@ -9,6 +9,7 @@ bufferline.setup {
     always_show_bufferline = false,
     separator_style = "thick",
     tab_size = "21",
+    theme = 'tokyonight',
     --- count is an integer representing total count of errors
     --- level is a string "error" | "warning"
     --- diagnostics_dict is a dictionary from error level ("error", "warning" or "info")to number of errors for each level.

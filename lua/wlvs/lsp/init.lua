@@ -46,22 +46,21 @@ local custom_attach = function(client)
   local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
   nvim_status.on_attach(client)
-
-  util.nnoremap("<space>cr", ":lua vim.lsp.buf.rename()<CR>", {buffer = 0})
-  telescope_mapper("<space>ca", "lsp_code_actions", nil, true)
+  -- util.nnoremap("gD", ":lua vim.lsp.buf.declaration()<CR>", {buffer = 0})
 
   util.nnoremap("gd", ":lua vim.lsp.buf.definition()<CR>", {buffer = 0})
-  util.nnoremap("gD", ":lua vim.lsp.buf.declaration()<CR>", {buffer = 0})
   util.nnoremap("gT", ":lua vim.lsp.buf.type_definition()<CR>", {buffer = 0})
-
-  -- util.nnoremap("<space>gI", handlers.implementation, {buffer = 0})
-  util.nnoremap("<space>lr", ":lua R('wlvs.lsp.codelens').run()<CR>", {buffer=0})
-  util.nnoremap("<space>rr", "<cmd>LspRestart<CR>", {buffer=0})
-
   telescope_mapper("gr", "lsp_references", nil, true)
   telescope_mapper("gI", "lsp_implementations", nil, true)
-  telescope_mapper("<space>wd", "lsp_document_symbols", { ignore_filename = true }, true)
-  telescope_mapper("<space>ww", "lsp_dynamic_workspace_symbols", { ignore_filename = true }, true)
+
+  telescope_mapper("<space>ca", "lsp_code_actions", nil, true)
+  util.nnoremap("<space>cr", ":lua vim.lsp.buf.rename()<CR>", {buffer = 0})
+  util.nnoremap("<space>lr", ":lua R('wlvs.lsp.codelens').run()<CR>", {buffer=0})
+  util.nnoremap("<space>rr", "<cmd>LspRestart<CR>", {buffer=0})
+  util.nnoremap("<space>T", "<cmd>LspTrouble<CR>")
+
+  -- telescope_mapper("<space>wd", "lsp_document_symbols", { ignore_filename = true }, true)
+  -- telescope_mapper("<space>ww", "lsp_dynamic_workspace_symbols", { ignore_filename = true }, true)
 
   -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
@@ -130,6 +129,7 @@ table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
 local servers = {
+  bashls= {},
   cssls = {
     filetypes = { 'css', 'scss', 'less', 'sass' },
     root_dir = lspconfig.util.root_pattern('package.json', '.git'),
@@ -172,6 +172,7 @@ local servers = {
       "typescript.tsx",
     },
   },
+  svelte={},
   gopls = {
     cmd = { "gopls" },
     settings = {

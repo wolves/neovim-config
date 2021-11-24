@@ -41,7 +41,6 @@ local spec = function(use)
       end,
     }
 
-
     -- TELESCOPE
     use {
       "nvim-telescope/telescope.nvim",
@@ -172,7 +171,7 @@ local spec = function(use)
       -- "Th3Whit3Wolf/onebuddy",
       -- "christianchiarulli/nvcode-color-schemes.vim",
       -- "Th3Whit3Wolf/one-nvim"
-
+      -- 'rmehri01/onenord.nvim',
       "folke/tokyonight.nvim",
       -- event = "VimEnter",
       config = function()
@@ -184,13 +183,13 @@ local spec = function(use)
 
     -- Writing Plugins
     -- somthing in here keeps crashing nvim
-    use {"preservim/vim-pencil"}
+    -- use {"preservim/vim-pencil"}
+
     use {"folke/zen-mode.nvim"}
     use {"folke/twilight.nvim"}
 
     use { "kyazdani42/nvim-tree.lua" }
 
-  --
    -- Tabs
    use({
      "akinsho/nvim-bufferline.lua",
@@ -240,10 +239,53 @@ local spec = function(use)
 
   --
   -- WIP: LANGUAGE:
+  --
+
+  -- TESTING
+
+  -- use {
+  --   "rcarriga/vim-ultest",
+  --   requires = {"vim-test/vim-test"},
+  --   run = ":UpdateRemotePlugins",
+  --   config = function()
+  --     -- vim.cmd([[
+  --     --   augroup GoTestRunner
+  --     --   au!
+  --     --   au BufWritePost *_test.go 2TermExec cmd='go_test -v -cover -race' direction='vertical' size=90
+  --     --   augroup END
+  --     -- ]])
+  --     vim.cmd([[
+  --       augroup GoUltestRunner
+  --       au!
+  --       let test#go#gotest#options = '-v -cover -race'
+  --       au BufWritePost *_test.go UltestNearest
+  --       augroup END
+  --     ]])
+  --   end
+  -- }
+  -- au BufWrite *_test.go :echom "Running Go Tests"
+      -- vim.cmd([[
+      --   augroup GoUltestRunner
+      --   au!
+      --   let test#go#gotest#options = '-cover -race'
+      --   au BufWritePost *_test.go UltestNearest
+      --   augroup END
+      -- ]])
 
   -- GO
   -- Testing out some options here. Need to determine the features I want...
   -- use({ "darrikonn/vim-gofmt" })
+    use {
+      "ray-x/go.nvim",
+      requires = {
+        'nvim-treesitter/nvim-treesitter',
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        'neovim/nvim-lspconfig',
+      },
+      config = function()
+        require('wlvs.go-nvim').setup()
+      end,
+    }
   -- use({
   --   "ray-x/go.nvim",
   --   wants = "nvim-lspconfig",

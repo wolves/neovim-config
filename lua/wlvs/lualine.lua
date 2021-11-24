@@ -2,6 +2,7 @@ local config = {
   options = {
     icons_enabled = true,
     theme = 'tokyonight',
+    -- theme = 'onenord',
     component_separators = '|',
     section_separators = { left = '', right = '' },
     disabled_filetypes = {},
@@ -9,7 +10,8 @@ local config = {
   },
   sections = {
     lualine_a = {
-      { 'mode', separator = { left = ''}, right_padding = 2, fmt = function(str) return str:sub(1,1) end },
+      -- { 'mode', separator = { left = ''}, right_padding = 2, fmt = function(str) return str:sub(1,1) end },
+      { 'mode', separator = { left = ''}, right_padding = 2},
     },
     lualine_b = {
       {

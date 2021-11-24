@@ -65,6 +65,7 @@ local function setup ()
       borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
 
       file_ignore_patterns = {
+        'node_modules',
         '%.jpg',
         '%.jpeg',
         '%.png',
