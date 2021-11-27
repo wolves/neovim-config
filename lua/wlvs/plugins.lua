@@ -84,6 +84,7 @@ local spec = function(use)
     use "hrsh7th/cmp-path"
     use "hrsh7th/cmp-nvim-lsp"
     use "hrsh7th/cmp-nvim-lua"
+    use "hrsh7th/cmp-vsnip"
     -- use "tamago324/cmp-zsh"
     use {
       "hrsh7th/nvim-cmp",
@@ -277,6 +278,7 @@ local spec = function(use)
   -- use({ "darrikonn/vim-gofmt" })
     use {
       "ray-x/go.nvim",
+      tag = 'v0.1.0',
       requires = {
         'nvim-treesitter/nvim-treesitter',
         'nvim-treesitter/nvim-treesitter-textobjects',

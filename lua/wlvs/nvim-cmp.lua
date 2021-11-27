@@ -37,10 +37,10 @@ local function setup()
 
     sources = {
       { name = "nvim_lsp", priority = 10 },
+      { name = "vsnip" },
       { name = "nvim_lua" },
       { name = "path" },
-      { name = "vsnip" },
-      { name = "buffer", keyword_length = 5, max_item_count = 15 },
+      { name = "buffer", keyword_length = 4, max_item_count = 15 },
     },
 
     snippet = {
