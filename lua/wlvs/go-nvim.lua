@@ -31,8 +31,8 @@ local function setup()
 
   -- vim.cmd("autocmd FileType go nmap <Leader><Leader>l GoLint")
   -- vim.cmd("autocmd FileType go nmap <Leader>gc :lua require('go.comment').gen()")
-  vim.cmd("autocmd FileType go nmap <Leader>tt :GoTest -v -cover<CR>")
-  vim.cmd("autocmd FileType go nmap <Leader>tr :GoTest -v -cover -race<CR>:resize +5<CR>")
+  vim.cmd("autocmd FileType go nmap <buffer><silent> <Leader>tt :GoTest -v -cover<CR>:setf GoTest<CR>")
+  vim.cmd("autocmd FileType go nmap <buffer><silent> <Leader>tr :GoTest -v -cover -race<CR>:setf GoTest<CR>:resize +5<CR>")
 
   -- vim.cmd([[
   -- augroup GoTestRunner
