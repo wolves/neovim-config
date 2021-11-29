@@ -129,10 +129,33 @@ table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
 local servers = {
-  bashls= {},
+  angularls = {},
+  ansiblels = {},
+  bashls = {},
   cssls = {
     filetypes = { 'css', 'scss', 'less', 'sass' },
     root_dir = lspconfig.util.root_pattern('package.json', '.git'),
+  },
+  gopls = {
+    cmd = { "gopls" },
+    settings = {
+      gopls = {
+        analyses = {
+          unusedparams = true,
+        },
+        staticcheck = true,
+        linksInHover = false,
+        codelenses = {
+          generate = true,
+          gc_details = true,
+          regenerate_cgo = true,
+          tidy = true,
+          upgrade_depdendency = true,
+          vendor = true,
+        },
+        usePlaceholders = true,
+      },
+    },
   },
   html = {},
   jsonls = {},
@@ -161,6 +184,8 @@ local servers = {
       },
     },
   },
+  svelte={},
+  -- tailwindcss={},
   tsserver = {
     cmd = { "typescript-language-server", "--stdio" },
     filetypes = {
@@ -172,28 +197,7 @@ local servers = {
       "typescript.tsx",
     },
   },
-  svelte={},
-  gopls = {
-    cmd = { "gopls" },
-    settings = {
-      gopls = {
-        analyses = {
-          unusedparams = true,
-        },
-        staticcheck = true,
-        linksInHover = false,
-        codelenses = {
-          generate = true,
-          gc_details = true,
-          regenerate_cgo = true,
-          tidy = true,
-          upgrade_depdendency = true,
-          vendor = true,
-        },
-        usePlaceholders = true,
-      },
-    },
-  },
+  yamlls = {},
 }
 
 local setup_server = function(server, config)

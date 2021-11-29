@@ -118,7 +118,9 @@ local leader = {
     name = "+neovim",
     n = "Org Notes",
     h = "Help Docs"
-  }
+  },
+  Z = { [[<cmd>lua require("zen-mode").reset()<cr>]], "Zen Mode" },
+  z = { [[<cmd>ZenMode<cr>]], "Zen Mode" },
 }
 
 wk.register(leader, { prefix = "<leader>" })
