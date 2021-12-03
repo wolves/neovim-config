@@ -5,7 +5,19 @@ vim.o.timeoutlen = 300
 
 local presets = require("which-key.plugins.presets")
 presets.objects["a("] = nil
-wk.setup({ show_help = false, triggers = "auto", plugins = { spelling = true }, key_labels = { ["<leader>"] = "SPC" } })
+wk.setup({
+  show_help = false,
+  triggers = "auto",
+  plugins = { spelling = true },
+  key_labels = { ["<leader>"] = "SPC" },
+  triggers_blacklist = {
+    -- list of mode / prefixes that should never be hooked by WhichKey
+    -- this is mostly relevant for key maps that start with a native binding
+    -- most people should not need to change this
+    i = { "j", "k", "<" },
+    v = { "j", "k" },
+  },
+})
 
 util.inoremap("<C-c>", "<esc>", {silent = true})
 
@@ -57,6 +69,12 @@ vim.cmd(":command WQ wq")
 vim.cmd(":command Wq wq")
 vim.cmd(":command W w")
 vim.cmd(":command Q q")
+
+-- " Ctrl-j/k deletes blank line below/above, and Alt-j/k inserts.
+-- nnoremap <silent><C-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
+-- nnoremap <silent><C-k> m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
+-- nnoremap <silent><A-j> :set paste<CR>m`o<Esc>``:set nopaste<CR>
+-- nnoremap <silent><A-k> :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
 local leader = {
   ["w"] = {
