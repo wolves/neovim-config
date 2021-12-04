@@ -36,7 +36,7 @@ local config = {
         sources = { 'nvim_lsp' },
         separator = {left = '', right = ''},
         sections = {'error', 'warn', 'hint'},
-        symbols = { error = ' ', warn = ' ', info = ' ' },
+        symbols = { error = ' ', warn = ' ', hint = ' ' , info = ' ' },
         color = {bg = '#1f2335'},
         always_visible = true,
       },

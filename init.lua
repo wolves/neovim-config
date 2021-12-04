@@ -1,14 +1,15 @@
 -- WLVS
 
 -- Bootstrap Packer
--- if require "wlvs.first_load"() then
---   return
--- end
+--  if require "wlvs.first_load"() then
+   --return
+ --end
 
 -- Leader <space>
 -- Map Leader out of the gate to its in place for all future maps
 vim.g.mapleader = " "
 
+require 'impatient'.enable_profile()
 -- Global variables needed in things after this
 -- vim.g.snippets = "luasnip"
 

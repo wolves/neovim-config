@@ -1,3 +1,5 @@
+require('packer_compiled')
+
 local spec = function(use)
 
   use {
@@ -48,6 +50,12 @@ local spec = function(use)
     requires = { "nvim-lua/popup.nvim", "nvim-lua/plenary.nvim" },
   }
 
+  use({
+    'mrjones2014/dash.nvim',
+    run = 'make install',
+  })
+
+
   use {
     "nvim-telescope/telescope-frecency.nvim",
     requires = { "nvim-telescope/telescope.nvim" },
@@ -65,11 +73,18 @@ local spec = function(use)
   --   requires = { "nvim-telescope/telescope.nvim" },
   -- }
 
-  use {
-    "nvim-telescope/telescope-fzf-writer.nvim",
-    requires = { "nvim-telescope/telescope.nvim" },
-  }
+  -- use {
+  --   "nvim-telescope/telescope-fzf-writer.nvim",
+  --   requires = { "nvim-telescope/telescope.nvim" },
+  -- }
 
+  use {
+    "nvim-telescope/telescope-project.nvim",
+    requires = { "nvim-telescope/telescope.nvim" },
+    config = function()
+      require('telescope').load_extension "project"
+    end,
+  }
   use {
     "nvim-telescope/telescope-packer.nvim",
     requires = { "nvim-telescope/telescope.nvim" },
@@ -166,9 +181,14 @@ local spec = function(use)
   })
 
   -- VIM EDITOR:
-
+  use 'lewis6991/impatient.nvim'
+  -- Better profiling output for startup.
+  use {
+    "dstein64/vim-startuptime",
+    cmd = "StartupTime",
+  }
   -- use { "kyazdani42/nvim-tree.lua" }
---
+
   -- Writing/Markdown Plugins
   use({
     "plasticboy/vim-markdown",
@@ -482,7 +502,9 @@ local spec = function(use)
 end
 
 local config = {
+  compile_path = vim.fn.stdpath('config')..'/lua/packer_compiled.lua',
   display = {
+    -- Move to lua dir so impatient.nvim can cache it
     open_fn = function()
       return require("packer.util").float({ border = "single" })
       --   local bufnr, winnr = require("window").floating_window { border = true, width_per = 0.8, height_per = 0.8 }

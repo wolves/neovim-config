@@ -1,3 +1,4 @@
+local util = require "util"
 local sorters = require "telescope.sorters"
 
 TelescopeMapArgs = TelescopeMapArgs or {}
@@ -48,8 +49,14 @@ map_tele("<space>gb", "git_branches")
 map_tele("<space>pb", "buffers")
 map_tele("<space>vh", "help_tags")
 
+-- map_tele("<space>tl", "todo_tele")
+
+-- util.nnoremap("<space>tl", ":lua require'telescope'.extensions.project.project{}<CR>")
+util.nnoremap("<space>pp", ":lua require'telescope'.extensions.project.project{}<CR>")
+
+
 
 -- util.nnoremap("<Leader>vn", ":lua require('config.telescope').search_notes()<CR>")
 
--- util.nnoremap("<Leader>gb", ":lua require('telescope.builtin').git_branches()<CR>")
+
 return map_tele

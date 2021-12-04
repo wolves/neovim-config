@@ -257,6 +257,18 @@ function M.builtin()
   require("telescope.builtin").builtin()
 end
 
+
+-- function M.todo_tele()
+--   local opts = themes.get_dropdown {
+--     winblend = 10,
+--     border = true,
+--     previewer = false,
+--     shorten_path = false,
+--   }
+
+--   require("telescope").extensions.'todo-comments'
+-- end
+
 function M.lsp_code_actions()
   local opts = themes.get_dropdown {
     winblend = 10,

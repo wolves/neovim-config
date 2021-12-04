@@ -65,10 +65,10 @@ vim.cmd("smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'    
 vim.cmd("imap <expr> <S-Tab>   vsnip#jumpable(-1)   ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'")
 vim.cmd("smap <expr> <S-Tab>   vsnip#jumpable(-1)   ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'")
 
-vim.cmd(":command WQ wq")
-vim.cmd(":command Wq wq")
-vim.cmd(":command W w")
-vim.cmd(":command Q q")
+-- vim.cmd(":!command WQ wq")
+-- vim.cmd(":!command Wq wq")
+-- vim.cmd(":command W w")
+-- vim.cmd(":command Q q")
 
 -- " Ctrl-j/k deletes blank line below/above, and Alt-j/k inserts.
 -- nnoremap <silent><C-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
@@ -131,7 +131,8 @@ local leader = {
     b = "Buffers",
     s = "Grep String",
     w = "Grep Word",
-  },
+    t = { "<cmd>TodoTelescope<CR>", "Todo - Telescope" },
+    },
   v = {
     name = "+neovim",
     n = "Org Notes",

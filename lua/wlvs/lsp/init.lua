@@ -48,16 +48,35 @@ local custom_attach = function(client)
   nvim_status.on_attach(client)
   -- util.nnoremap("gD", ":lua vim.lsp.buf.declaration()<CR>", {buffer = 0})
 
-  util.nnoremap("gd", ":lua vim.lsp.buf.definition()<CR>", {buffer = 0})
+  -- util.nnoremap("gd", ":lua vim.lsp.buf.definition()<CR>", {buffer = 0})
   util.nnoremap("gT", ":lua vim.lsp.buf.type_definition()<CR>", {buffer = 0})
   telescope_mapper("gr", "lsp_references", nil, true)
   telescope_mapper("gI", "lsp_implementations", nil, true)
 
   telescope_mapper("<space>ca", "lsp_code_actions", nil, true)
   util.nnoremap("<space>cr", ":lua vim.lsp.buf.rename()<CR>", {buffer = 0})
-  util.nnoremap("<space>lr", ":lua R('wlvs.lsp.codelens').run()<CR>", {buffer=0})
+  util.nnoremap("<space>lr", ":lua R('wlvs.lsp.codelens').run()<CR>", {buffer = 0})
   util.nnoremap("<space>rr", "<cmd>LspRestart<CR>", {buffer=0})
   util.nnoremap("<space>T", "<cmd>LspTrouble<CR>")
+  util.nnoremap('gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>')
+  util.nnoremap('gd', '<Cmd>lua vim.lsp.buf.definition()<CR>')
+  util.nnoremap('K', '<Cmd>lua vim.lsp.buf.hover()<CR>')
+  util.nnoremap('gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+  util.nnoremap('<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+  -- util.nnoremap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>')
+  -- util.nnoremap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>')
+  -- util.nnoremap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>')
+  util.nnoremap('gl', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
+  util.nnoremap('[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
+  util.nnoremap(']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+  -- util.nnoremap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>')
+
+  -- Set some keybinds conditional on server capabilities
+  if client.resolved_capabilities.document_formatting then
+    util.nnoremap("<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>")
+  elseif client.resolved_capabilities.document_range_formatting then
+    util.nnoremap("<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>")
+  end
 
   -- telescope_mapper("<space>wd", "lsp_document_symbols", { ignore_filename = true }, true)
   -- telescope_mapper("<space>ww", "lsp_dynamic_workspace_symbols", { ignore_filename = true }, true)
@@ -86,7 +105,8 @@ local custom_attach = function(client)
   filetype_attach[filetype](client)
 end
 
-local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+-- local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
 
 for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
@@ -96,7 +116,7 @@ end
 lsp.handlers['textDocument/publishDiagnostics'] = lsp.with(lsp.diagnostic.on_publish_diagnostics, {
   virtual_text = {
     spacing = 4,
-    prefix = "",
+    prefix = " ",
   },
   signs = true,
   update_in_insert = false,
