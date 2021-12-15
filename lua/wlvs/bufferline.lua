@@ -35,21 +35,23 @@ bufferline.setup {
             return buf.filename:match('%_test') or buf.filename:match('%_spec')
           end,
         },
-        {
-          name = "Notes",
-          -- highlight = {gui = "undercurl", guisp = "green"},
-          auto_close = false,  -- whether or not close this group if it doesn't contain the current buffer
-          matcher = function(buf)
-            return buf.filename:match('%.md') or buf.filename:match('%.txt')
-          end,
-          separator = { -- Optional
-            style = require('bufferline.groups').separator.tab
-          },
-        }
+        -- {
+        --   name = "Notes",
+        --   -- highlight = {gui = "undercurl", guisp = "green"},
+        --   auto_close = false,  -- whether or not close this group if it doesn't contain the current buffer
+        --   matcher = function(buf)
+        --     return buf.filename:match('%.md') or buf.filename:match('%.txt')
+        --   end,
+        --   separator = { -- Optional
+        --     style = require('bufferline.groups').separator.tab
+        --   },
+        -- }
       },
       custom_filter = function(buf, buf_nums)
         -- dont show help buffers in the bufferline
         if not vim.bo[buf].filetype == "help" then
+          return true
+        elseif not vim.bo[buf].filetype == "GoTest" then
           return true
         end
 

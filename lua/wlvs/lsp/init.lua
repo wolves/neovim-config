@@ -5,7 +5,7 @@ if not has_lsp then
   return
 end
 
-local lspconfig_util = require "lspconfig.util"
+-- local util = require "lspconfig.util"
 
 local nvim_status = require 'lsp-status'
 
@@ -42,7 +42,8 @@ local filetype_attach = setmetatable({
   end,
 })
 
-local custom_attach = function(client)
+-- local custom_attach = function(client)
+local on_attach = function(client)
   local filetype = vim.api.nvim_buf_get_option(0, "filetype")
 
   nvim_status.on_attach(client)
@@ -156,26 +157,84 @@ local servers = {
     filetypes = { 'css', 'scss', 'less', 'sass' },
     root_dir = lspconfig.util.root_pattern('package.json', '.git'),
   },
+  -- gopls = {
+  --   -- cmd = { "gopls" },
+  --   settings = {
+  --     gopls = {
+  --       analyses = {
+  --         unusedparams = true,
+  --       },
+  --       staticcheck = true,
+  --       linksInHover = false,
+  --       codelenses = {
+  --         generate = true,
+  --         gc_details = true,
+  --         regenerate_cgo = true,
+  --         tidy = true,
+  --         upgrade_depdendency = true,
+  --         vendor = true,
+  --       },
+  --       usePlaceholders = true,
+  --     },
+  --   root_dir = function(fname)
+  --     return lspconfig.util.root_pattern("go.mod", ".git")(fname) or lspconfig.util.path.dirname(fname) -- util.path.dirname(fname)
+  --   end
+  --   },
+  -- },
   gopls = {
-    cmd = { "gopls" },
+    on_attach = on_attach,
+    -- capabilities = cap,
+    filetypes = {"go", "gomod"},
+    message_level = vim.lsp.protocol.MessageType.Error,
+    cmd = {
+      "gopls", -- share the gopls instance if there is one already
+      "-remote=auto", --[[ debug options ]] --
+      -- "-logfile=auto",
+      -- "-debug=:0",
+      "-remote.debug=:0"
+      -- "-rpc.trace",
+    },
+
+    flags = {allow_incremental_sync = true, debounce_text_changes = 1000},
     settings = {
       gopls = {
-        analyses = {
-          unusedparams = true,
-        },
-        staticcheck = true,
-        linksInHover = false,
+        -- more settings: https://github.com/golang/tools/blob/master/gopls/doc/settings.md
+        -- flags = {allow_incremental_sync = true, debounce_text_changes = 500},
+        -- not supported
+        analyses = {unusedparams = true, unreachable = false},
         codelenses = {
-          generate = true,
-          gc_details = true,
-          regenerate_cgo = true,
-          tidy = true,
-          upgrade_depdendency = true,
-          vendor = true,
+          generate = true, -- show the `go generate` lens.
+          gc_details = true, --  // Show a code lens toggling the display of gc's choices.
+          test = true,
+          tidy = true
         },
         usePlaceholders = true,
+        completeUnimported = true,
+        staticcheck = true,
+        matcher = "fuzzy",
+        diagnosticsDelay = "500ms",
+        experimentalWatchedFileDelay = "1000ms",
+        symbolMatcher = "fuzzy",
+        gofumpt = false, -- true, -- turn on for new repos, gofmpt is good but also create code turmoils
+        buildFlags = {"-tags", "integration"}
+        -- buildFlags = {"-tags", "functional"}
       },
+      root_dir = function(fname)
+        return lspconfig.util.root_pattern("go.mod", ".git")(fname) or lspconfig.util.path.dirname(fname) -- util.path.dirname(fname)
+      end
     },
+    -- root_dir = function(fname)
+    --   local Path = require "plenary.path"
+
+    --   local absolute_cwd = Path:new(vim.loop.cwd()):absolute()
+    --   local absolute_fname = Path:new(fname):absolute()
+
+    --   if string.find(absolute_cwd, "/cmd/", 1, true) and string.find(absolute_fname, absolute_cwd, 1, true) then
+    --     return absolute_cwd
+    --   end
+
+    --   return lspconfig.util.root_pattern("go.mod", ".git")(fname)
+    -- end,
   },
   html = {},
   jsonls = {},
@@ -231,7 +290,7 @@ local setup_server = function(server, config)
 
   config = vim.tbl_deep_extend("force", {
     on_init = custom_init,
-    on_attach = custom_attach,
+    on_attach = on_attach,
     capabilities = updated_capabilities,
     flags = {
       debounce_text_changes = 50,

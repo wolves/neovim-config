@@ -9,7 +9,7 @@
 -- Map Leader out of the gate to its in place for all future maps
 vim.g.mapleader = " "
 
-require 'impatient'.enable_profile()
+require 'impatient'
 -- Global variables needed in things after this
 -- vim.g.snippets = "luasnip"
 

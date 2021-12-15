@@ -19,11 +19,12 @@ wk.setup({
   },
 })
 
-util.inoremap("<C-c>", "<esc>", {silent = true})
+-- util.inoremap("<C-c>", "<esc>", {silent = true})
+vim.api.nvim_set_keymap("i", "<C-c>", "<ESC>", {silent = true, noremap = true})
 
 -- Switch buffers with tab
-util.nnoremap("<tab>", ":bnext<cr>")
-util.nnoremap("<S-tab>", ":bprevious<cr>")
+util.nnoremap("<tab>", ":BufferLineCycleNext<CR>")
+util.nnoremap("<S-tab>", ":BufferLineCyclePrev<CR>")
 
 -- better indenting
 util.vnoremap("<", "<gv")

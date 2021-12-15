@@ -95,6 +95,14 @@ local spec = function(use)
     run = "make",
     requires = { "nvim-telescope/telescope.nvim" },
   }
+  use {
+    "nvim-telescope/telescope-file-browser.nvim",
+    after = "telescope.nvim",
+    requires = { "nvim-telescope/telescope.nvim" },
+    config = function()
+      require('telescope').load_extension "file_browser"
+    end,
+  }
 
   -- PR Filter is:open is:pr review-requested:wolves archived:false
   -- use { "nvim-telescope/telescope-github.nvim"}
@@ -213,8 +221,8 @@ local spec = function(use)
   -- Re-enable twilight after it stops crashing from markdown parser error
   use {
     "folke/zen-mode.nvim",
-    cmd = "ZenMode",
-    opt = true,
+    -- cmd = "ZenMode",
+    -- opt = true,
     wants = {
       -- "twilight.nvim",
       "vim-pencil",

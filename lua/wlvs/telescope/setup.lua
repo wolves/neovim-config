@@ -80,6 +80,17 @@ local function setup ()
     },
 
     extensions = {
+      file_browser = {
+        theme = "ivy",
+        mappings = {
+          ["i"] = {
+            -- your custom insert mode mappings
+          },
+          ["n"] = {
+            -- your custom normal mode mappings
+          },
+        },
+      },
       fzf = {
         fuzzy = true,                    -- false will only do exact matching
         override_generic_sorter = true,  -- override the generic sorter

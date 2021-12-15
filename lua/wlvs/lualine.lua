@@ -33,7 +33,7 @@ local config = {
       },
       {
         'diagnostics',
-        sources = { 'nvim_lsp' },
+        sources = { 'nvim_diagnostic' },
         separator = {left = '', right = ''},
         sections = {'error', 'warn', 'hint'},
         symbols = { error = ' ', warn = ' ', hint = ' ' , info = ' ' },

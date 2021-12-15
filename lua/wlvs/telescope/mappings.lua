@@ -1,6 +1,7 @@
 local util = require "util"
 local sorters = require "telescope.sorters"
 
+
 TelescopeMapArgs = TelescopeMapArgs or {}
 
 local map_tele = function(key, f, options, buffer)
@@ -32,7 +33,7 @@ map_tele("<leader>ek", "edit_kitty")
 
 -- Files
 map_tele("<C-p>", "telescope_files")
-map_tele("<space>pf", "file_browser")
+-- map_tele("<space>pf", "file_browser")
 map_tele("<space>ps", "grep_prompt")
 map_tele("<space>fw", "grep_word")
 
@@ -53,6 +54,7 @@ map_tele("<space>vh", "help_tags")
 
 -- util.nnoremap("<space>tl", ":lua require'telescope'.extensions.project.project{}<CR>")
 util.nnoremap("<space>pp", ":lua require'telescope'.extensions.project.project{}<CR>")
+util.nnoremap("<space>pf", ":lua require'telescope'.extensions.file_browser.file_browser{}<CR>")
 
 
 

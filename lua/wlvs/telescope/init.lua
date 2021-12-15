@@ -63,6 +63,7 @@ function M.edit_neovim()
 
   opts_without_preview = vim.deepcopy(opts_with_preview)
   opts_without_preview.previewer = false
+
   require("telescope.builtin").file_browser(opts_with_preview)
 end
 
@@ -180,19 +181,20 @@ function M.telescope_files()
   end
 end
 
-function M.file_browser()
-  local opts
+-- function M.file_browser()
+--   local opts
 
-  opts = {
-    sorting_strategy = "ascending",
-    scroll_strategy = "cycle",
-    layout_config = {
-      prompt_position = "top",
-    },
-  },
+--   opts = {
+    -- sorting_strategy = "ascending",
+    -- scroll_strategy = "cycle",
+    -- layout_config = {
+    --   prompt_position = "top",
+    -- },
+  -- },
 
-  require("telescope.builtin").file_browser(opts)
-end
+  -- require("telescope.builtin").file_browser(opts)
+--   require('telescope').load_extension "file_browser"
+-- end
 
 function M.grep_prompt()
   require("telescope.builtin").grep_string {
