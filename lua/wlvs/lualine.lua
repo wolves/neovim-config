@@ -1,137 +1,100 @@
-local config = {
-  options = {
-    icons_enabled = true,
-    theme = 'tokyonight',
-    -- theme = 'onenord',
-    component_separators = '|',
-    section_separators = { left = '', right = '' },
-    disabled_filetypes = {},
-    always_divide_middle = true,
-  },
-  sections = {
-    lualine_a = {
-      -- { 'mode', separator = { left = ''}, right_padding = 2, fmt = function(str) return str:sub(1,1) end },
-      { 'mode', separator = { left = ''}, right_padding = 2},
-    },
-    lualine_b = {
-      {
-        'diff',
-        separator = {left = '', right = ''},
-        color = {bg = '#1f2335'},
-        always_visible = true
-      },
-      {'branch', separator = '', fmt = function(str) return str:sub(1,9) end },
-    },
-    lualine_c = {
-      {'filename', path = 0, shorting_target = 50, separator = ''},
-    },
-    lualine_x = {},
-    lualine_y = {
-      {
-        'filetype',
-        separator = '',
-      },
-      {
-        'diagnostics',
-        sources = { 'nvim_diagnostic' },
-        separator = {left = '', right = ''},
-        sections = {'error', 'warn', 'hint'},
-        symbols = { error = ' ', warn = ' ', hint = ' ' , info = ' ' },
-        color = {bg = '#1f2335'},
-        always_visible = true,
-      },
-    },
-    lualine_z = {
-      {
-        'progress',
-        icon = '',
-        separator = { right = ''},
-        left_padding = 0,
-      },
-    },
-  },
-
-  inactive_sections = {
-    lualine_a = {
-      {'filename', path = 1, shorting_target = 80},
-    },
-    lualine_b = {},
-    lualine_c = {},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  tabline = {},
-  extensions = {}
-}
-
-
--- try to load matching lualine theme
-
-local M = {}
-
-function M.load()
-  local name = vim.g.colors_name or ""
-  local ok, _ = pcall(require, "lualine.themes." .. name)
-  if ok then
-    config.options.theme = name
-  end
-  require("lualine").setup(config)
+local status_ok, lualine = pcall(require, "lualine")
+if not status_ok then
+	return
 end
 
-M.load()
+local hide_in_width = function()
+	return vim.fn.winwidth(0) > 80
+end
 
--- vim.api.nvim_exec([[
---   autocmd ColorScheme * lua require("config.lualine").load();
--- ]], false)
+local diagnostics = {
+	"diagnostics",
+	sources = { "nvim_diagnostic" },
+  sections = { "error", "warn" },
+  symbols = { error = ' ', warn = ' ', hint = ' ' , info = ' ' },
+  separator = {left = '', right = ''},
+	-- symbols = { error = " ", warn = " " },
+	-- colored = false,
+	update_in_insert = false,
+	always_visible = true,
+  color = {bg = '#1f2335'}
+}
 
-return M
---
--- local function clock()
---   return "◴ " .. os.date("%H:%M")
--- end
+local diff = {
+	"diff",
+	colored = false,
+	symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
+  cond = hide_in_width
+}
 
--- local function lsp_progress()
---   local messages = vim.lsp.util.get_progress_messages()
---   if #messages == 0 then
---     return
---   end
---   local status = {}
---   for _, msg in pairs(messages) do
---     table.insert(status, (msg.percentage or 0) .. "%% " .. (msg.title or ""))
---   end
---   local spinners = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" }
---   local ms = vim.loop.hrtime() / 1000000
---   local frame = math.floor(ms / 120) % #spinners
---   return table.concat(status, " | ") .. " " .. spinners[frame + 1]
--- end
+local mode = {
+	"mode",
+	fmt = function(str)
+		return "- " .. str .. " -"
+	end,
+}
 
--- vim.cmd([[autocmd User LspProgressUpdate let &ro = &ro]])
+local filetype = {
+	"filetype",
+	icons_enabled = false,
+	icon = nil,
+}
 
--- local config = {
---   options = {
---     theme = "tokyonight",
---     section_separators = { "", "" },
---     component_separators = { "", "" },
---     -- section_separators = { "", "" },
---     -- component_separators = { "", "" },
---     icons_enabled = true,
---   },
---   sections = {
---     lualine_a = { "mode" },
---     lualine_b = { "branch" },
---     lualine_c = { { "diagnostics", sources = { "nvim_lsp" } }, "filename" },
---     -- lualine_x = { "filetype", lsp_progress },
---     lualine_y = { "progress" },
---     lualine_z = { clock },
---   },
---   inactive_sections = {
---     lualine_a = {},
---     lualine_b = {},
---     lualine_c = {},
---     lualine_x = {},
---     lualine_y = {},
---     lualine_z = {},
---   },
---   -- extensions = { "nvim-tree" },
--- }
+local branch = {
+	"branch",
+	icons_enabled = true,
+	icon = "",
+  separator = { left = ''},
+  right_padding = 2,
+}
+
+local location = {
+	"location",
+	padding = 0,
+}
+
+-- cool function for progress
+local progress = function()
+	local current_line = vim.fn.line(".")
+	local total_lines = vim.fn.line("$")
+	local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
+	local line_ratio = current_line / total_lines
+	local index = math.ceil(line_ratio * #chars)
+	return chars[index]
+end
+
+local spaces = function()
+	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
+end
+
+lualine.setup({
+	options = {
+		icons_enabled = true,
+		theme = "tokyonight",
+    component_separators = '|',
+    section_separators = { left = '', right = '' },
+		-- component_separators = { left = "", right = "" },
+		-- section_separators = { left = "", right = "" },
+		disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline" },
+		always_divide_middle = true,
+	},
+	sections = {
+    lualine_a = { branch, diagnostics },
+		lualine_b = { mode },
+		lualine_c = {},
+		-- lualine_x = { "encoding", "fileformat", "filetype" },
+		lualine_x = { diff, spaces, "encoding", filetype },
+		lualine_y = { location },
+		lualine_z = { progress },
+	},
+	inactive_sections = {
+		lualine_a = {},
+		lualine_b = {},
+		lualine_c = { "filename" },
+		lualine_x = { "location" },
+		lualine_y = {},
+		lualine_z = {},
+	},
+	tabline = {},
+	extensions = {},
+})

@@ -1,32 +1,23 @@
--- WLVS
-
--- Bootstrap Packer
---  if require "wlvs.first_load"() then
-   --return
- --end
-
--- Leader <space>
--- Map Leader out of the gate to its in place for all future maps
-vim.g.mapleader = " "
-
-require 'impatient'
--- Global variables needed in things after this
--- vim.g.snippets = "luasnip"
-
--- Setup Globals that need to always be available
-require "wlvs.globals"
-
--- Place to disable unused builtin plugins
-require "wlvs.disable_builtin"
-
--- Force Astronauta (Lua Keymaps) to load first
--- vim.cmd [[runtime plugin/astronauta.vim]]
-
-require "util"
-
+require "wlvs.options"
+require "wlvs.keymaps"
 require "wlvs.plugins"
-
+require "wlvs.colorscheme"
+require "wlvs.cmp"
 require "wlvs.lsp"
--- require "wlvs.telescope.setup"
--- require "wlvs.telescope.mappings"
--- require "wlvs"
+require "wlvs.telescope"
+require "wlvs.treesitter"
+require "wlvs.autopairs"
+require "wlvs.comment"
+require "wlvs.gitsigns"
+require "wlvs.nvim-tree"
+require "wlvs.bufferline"
+require "wlvs.lualine"
+require "wlvs.toggleterm"
+require "wlvs.project"
+require "wlvs.impatient"
+require "wlvs.indentline"
+require "wlvs.todocomments"
+require "wlvs.whichkey"
+require "wlvs.neogit"
+require "wlvs.neoscroll"
+require "wlvs.autocommands"

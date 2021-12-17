@@ -17,6 +17,3 @@ require("neogit").setup({
   },
 })
 
-local util = require("util")
-
-util.nnoremap('<Leader>ng', ':Neogit<CR>')
