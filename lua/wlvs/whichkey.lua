@@ -82,18 +82,19 @@ local mappings = {
   -- ["b"] = {
   --   "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
   --   "Buffers",
-  -- },
+  -- }
   ["e"] = {"<cmd>NvimTreeToggle<cr>", "Explorer"},
   ["w"] = {"<cmd>w!<cr>", "Save"},
   ["q"] = {"<cmd>q!<cr>", "Quit"},
   ["T"] = {"<cmd>Trouble<cr>", "Trouble"},
   -- ["P"] = { "<cmd>Telescope projects<cr>", "Projects"},
   b = {
+    name = "Buffers",
     b = {
       "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
-      "Buffers",
+      "Select Buffer",
     },
-    d = {"<cmd>Bdelete<cr>", "Delete buffer"},
+    d = {"<cmd>Bdelete<cr>", "Delete Buffer"},
   },
   g = {
     name = "Git",
