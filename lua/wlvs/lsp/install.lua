@@ -25,11 +25,7 @@ function M.setup(servers, options)
   lspi.on_server_ready(function(server)
     local opts = vim.tbl_deep_extend("force", options, servers[server.name] or {})
 
-    if server.name == "gopls" then
-      util.info("gopls server enabled", "LSP")
-    else
-      server:setup(opts)
-    end
+    server:setup(opts)
     vim.cmd([[ do User LspAttachBuffers ]])
   end)
 
