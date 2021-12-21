@@ -40,7 +40,6 @@ function M.setup(client, buf)
       augroup END
     ]])
   end
-
 end
 
 return M

@@ -17,7 +17,7 @@ vim.cmd [[
 
   augroup _go
     autocmd!
-    autocmd FileType GoTest nnoremap <buffer><silent> q :bd<CR>
+    autocmd BufWritePre *.go :silent! lua require('go.format').goimport() 
   augroup end
 
   augroup _markdown
@@ -31,3 +31,19 @@ vim.cmd [[
     autocmd VimResized * tabdo wincmd = 
   augroup end
 ]]
+
+-- augroup _go
+--   autocmd!
+--   autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
+--   autocmd FileType GoTest nnoremap <buffer><silent> q :bd<CR>
+-- augroup end
+
+-- Import on save
+-- vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
+
+  -- vim.cmd("autocmd FileType go nmap <Leader><Leader>l GoLint")
+  -- vim.cmd("autocmd FileType go nmap <Leader>gc :lua require('go.comment').gen()")
+
+  -- vim.cmd("autocmd FileType go,gomod nmap <buffer><silent> <Leader>tt :GoTest ./... -v -cover<CR>:setf GoTest<CR>:resize +5<CR>")
+  -- vim.cmd("autocmd FileType go,gomod nmap <buffer><silent> <Leader>tf :GoTestFile -v -cover<CR>:setf GoTest<CR>:resize +5<CR>")
+  -- vim.cmd("autocmd FileType go,gomod nmap <buffer><silent> <Leader>tr :GoTest ./... -v -cover -race<CR>:setf GoTest<CR>:resize +5<CR>")

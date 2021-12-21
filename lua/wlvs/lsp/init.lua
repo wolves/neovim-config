@@ -1,7 +1,6 @@
 require("wlvs.lsp.diagnostics").setup()
 require("wlvs.lsp.kind").setup()
 
-
 local function on_attach(client, bufnr)
   require("wlvs.lsp.formatting").setup(client, bufnr)
   require("wlvs.lsp.keys").setup(client, bufnr)
@@ -27,12 +26,14 @@ local servers = {
   yamlls = {},
 }
 
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
 local options = {
   on_attach = on_attach,
   capabilities = capabilities,
   flags = {
     debounce_text_changes = 150,
-  }
+  },
 }
 
 require("wlvs.lsp.null-ls").setup(options)

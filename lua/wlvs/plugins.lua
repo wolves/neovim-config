@@ -60,6 +60,7 @@ return packer.startup(function(use)
   use "folke/todo-comments.nvim"
   use "folke/which-key.nvim"
   use "karb94/neoscroll.nvim"
+
   use({
     "rcarriga/nvim-notify",
     config = function()
@@ -82,6 +83,9 @@ return packer.startup(function(use)
   -- snippets
   use "L3MON4D3/LuaSnip" --snippet engine
   use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
+
+  -- Language Specific
+  use "ray-x/go.nvim"
 
   -- LSP
   use "neovim/nvim-lspconfig" -- enable LSP
@@ -116,7 +120,6 @@ return packer.startup(function(use)
   -- Vim
   use "AndrewRadev/splitjoin.vim"
   use "tpope/vim-surround"
-
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
