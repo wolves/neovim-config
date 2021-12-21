@@ -1,27 +1,6 @@
 require("wlvs.lsp.diagnostics").setup()
 require("wlvs.lsp.kind").setup()
 
--- local filetype_attach = setmetatable({
---   go = function(_)
---     vim.cmd [[
---       augroup lsp_buf_format
---         au! BufWritePre <buffer>
---         autocmd BufWritePre <buffer> :lua vim.lsp.buf.formatting_sync()
---       augroup END
---     ]]
---   end,
---
--- }, {
---   __index = function()
---     return function() end
---   end,
--- })
-
--- local custom_attach = function(client)
---   local filetype = vim.api.nvim_buf_get_option(0, "filetype")
---
---   filetype_attach[filetype](client)
--- end
 
 local function on_attach(client, bufnr)
   require("wlvs.lsp.formatting").setup(client, bufnr)
@@ -37,12 +16,12 @@ end
 local servers = {
   ansiblels = {},
   bashls = {},
-  cssls = {},
+  cssls = require("wlvs.lsp.settings.cssls"),
   dockerls = {},
-  gopls = {},
+  gopls = require("wlvs.lsp.settings.gopls"),
   html = {},
-  jsonls = {},
-  sumneko_lua = {},
+  jsonls = require("wlvs.lsp.settings.jsonls"),
+  sumneko_lua = require("wlvs.lsp.settings.sumneko_lua"),
   tsserver = {},
   vimls = {},
   yamlls = {},
