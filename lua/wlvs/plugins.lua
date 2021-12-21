@@ -60,20 +60,24 @@ return packer.startup(function(use)
   use "folke/todo-comments.nvim"
   use "folke/which-key.nvim"
   use "karb94/neoscroll.nvim"
+  use({
+    "rcarriga/nvim-notify",
+    config = function()
+      vim.notify = require("notify")
+    end,
+  })
 
-
-   -- Colorschemes
-  -- use "lunarvim/colorschemes" -- A bunch of colorschemes you can try out
-  -- use "lunarvim/darkplus.nvim"
+  -- Colorschemes
   use "folke/tokyonight.nvim"
 
   -- cmp plugins
   use "hrsh7th/nvim-cmp" -- The completion plugin
+  use "hrsh7th/cmp-nvim-lsp"
+  use "hrsh7th/cmp-nvim-lua"
   use "hrsh7th/cmp-buffer" -- buffer completions
   use "hrsh7th/cmp-path" -- path completions
   use "hrsh7th/cmp-cmdline" -- cmdline completions
   use "saadparwaiz1/cmp_luasnip" -- snippet completions
-  use "hrsh7th/cmp-nvim-lsp"
 
   -- snippets
   use "L3MON4D3/LuaSnip" --snippet engine
@@ -83,7 +87,16 @@ return packer.startup(function(use)
   use "neovim/nvim-lspconfig" -- enable LSP
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
+  use "jose-elias-alvarez/nvim-lsp-ts-utils"
   use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
+  use ({
+    "RRethy/vim-illuminate",
+    event = "CursorHold",
+    module = "illuminate",
+    config = function()
+      vim.g.Illuminate_delay = 1000
+    end,
+  })
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"

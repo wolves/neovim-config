@@ -117,16 +117,6 @@ local mappings = {
     },
     v = {"<cmd>lua require('wlvs.telescope').help_tags()<cr>", "Help docs"},
   },
-  l = {
-    name = "LSP",
-    a = {"<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action"},
-    f = {"<cmd>lua vim.lsp.buf.formatting()<cr>", "Format"},
-    i = {"<cmd>LspInfo<cr>", "Info"},
-    j = { "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", "Next Diagnostic" },
-    k = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>", "Prev Diagnostic" },
-    r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
-    s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
-  },
   p = {
     name = "Project",
     p = {"<cmd>Telescope projects<cr>", "Select a project"},
