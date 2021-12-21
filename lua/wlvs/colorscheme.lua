@@ -1,3 +1,7 @@
+local status_ok, tokyonight = pcall(require, "tokyonight")
+if not status_ok then
+	return
+end
 
 vim.o.background = "dark"
 vim.g.tokyonight_style = "storm"
@@ -26,7 +30,7 @@ vim.g.tokyonight_colors = {}
 vim.g.tokyonight_lualine_bold = false
 -- vim.g.tokyonight_colors = { border = "orange" }
 
-require("tokyonight").colorscheme()
+tokyonight.colorscheme()
 
 -- vim.cmd [[
 -- try
