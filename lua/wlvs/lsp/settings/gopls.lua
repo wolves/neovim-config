@@ -3,14 +3,15 @@ if not status_ok then
   return
 end
 
-go_nvim.setup{
+go_nvim.setup({
   lsp_cfg = {
     flags = {
       allow_incremental_sync = true,
       debounce_text_changes = 150,
-    }
+    },
   },
-  lsp_gofumpt = true
-}
+  lsp_gofumpt = true,
+  lsp_diag_hdlr = false,
+})
 
 return require("go.lsp").config()
