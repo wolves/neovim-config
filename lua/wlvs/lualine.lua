@@ -12,19 +12,20 @@ local diagnostics = {
   sources = { "nvim_diagnostic" },
   sections = { "error", "warn" },
   symbols = { error = " ", warn = " ", hint = " ", info = " " },
-  separator = { left = "", right = "" },
   -- symbols = { error = " ", warn = " " },
-  -- colored = false,
+  colored = true,
   update_in_insert = false,
   always_visible = true,
-  color = { bg = "#1f2335" },
+  color = { bg = "#223249" },
 }
 
 local diff = {
   "diff",
-  colored = false,
+  colored = true,
   symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
   cond = hide_in_width,
+  separator = { left = "", right = "" },
+  color = { bg = "#2D4F67" },
 }
 
 local mode = {
@@ -44,7 +45,8 @@ local branch = {
   "branch",
   icons_enabled = true,
   icon = "",
-  separator = { left = "" },
+  separator = { left = "", right = "" },
+  -- separator = { left = "" },
   right_padding = 2,
 }
 
@@ -54,14 +56,17 @@ local location = {
 }
 
 -- cool function for progress
-local progress = function()
-  local current_line = vim.fn.line(".")
-  local total_lines = vim.fn.line("$")
-  local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
-  local line_ratio = current_line / total_lines
-  local index = math.ceil(line_ratio * #chars)
-  return chars[index]
-end
+local progress = {
+  function()
+    local current_line = vim.fn.line(".")
+    local total_lines = vim.fn.line("$")
+    local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
+    local line_ratio = current_line / total_lines
+    local index = math.ceil(line_ratio * #chars)
+    return chars[index]
+  end,
+  color = { bg = "#223249" },
+}
 
 local spaces = function()
   return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
@@ -79,12 +84,12 @@ lualine.setup({
     always_divide_middle = true,
   },
   sections = {
-    lualine_a = { branch, diagnostics },
+    lualine_a = { diagnostics, branch },
     lualine_b = { mode },
     lualine_c = {},
     -- lualine_x = { "encoding", "fileformat", "filetype" },
-    lualine_x = { diff, spaces, "encoding", filetype },
-    lualine_y = { location },
+    lualine_x = { spaces, filetype },
+    lualine_y = { location, diff },
     lualine_z = { progress },
   },
   inactive_sections = {

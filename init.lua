@@ -1,23 +1,24 @@
-require "wlvs.options"
-require "wlvs.keymaps"
-require "wlvs.plugins"
-require "wlvs.colorscheme"
-require "wlvs.cmp"
-require "wlvs.lsp"
-require "wlvs.telescope"
-require "wlvs.treesitter"
-require "wlvs.autopairs"
-require "wlvs.comment"
-require "wlvs.gitsigns"
-require "wlvs.nvim-tree"
-require "wlvs.bufferline"
-require "wlvs.lualine"
-require "wlvs.toggleterm"
-require "wlvs.project"
-require "wlvs.impatient"
-require "wlvs.indentline"
-require "wlvs.todocomments"
-require "wlvs.whichkey"
-require "wlvs.neogit"
-require "wlvs.neoscroll"
-require "wlvs.autocommands"
+require("wlvs.options")
+require("wlvs.keymaps")
+require("wlvs.plugins")
+require("wlvs.colorscheme")
+require("wlvs.colorizer")
+require("wlvs.cmp")
+require("wlvs.lsp")
+require("wlvs.telescope")
+require("wlvs.treesitter")
+require("wlvs.autopairs")
+require("wlvs.comment")
+require("wlvs.gitsigns")
+require("wlvs.nvim-tree")
+require("wlvs.bufferline")
+require("wlvs.lualine")
+require("wlvs.toggleterm")
+require("wlvs.project")
+require("wlvs.impatient")
+require("wlvs.indentline")
+require("wlvs.todocomments")
+require("wlvs.whichkey")
+require("wlvs.neogit")
+require("wlvs.neoscroll")
+require("wlvs.autocommands")

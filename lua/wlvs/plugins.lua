@@ -68,9 +68,10 @@ return packer.startup(function(use)
     end,
   })
 
-  -- Colorschemes
-  -- use "folke/tokyonight.nvim"
+  -- Colors
+  use("folke/tokyonight.nvim")
   use("rebelot/kanagawa.nvim")
+  use("norcalli/nvim-colorizer.lua")
 
   -- cmp plugins
   use("hrsh7th/nvim-cmp") -- The completion plugin
