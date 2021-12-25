@@ -12,6 +12,6 @@ go_nvim.setup({
   },
   lsp_gofumpt = true,
   lsp_diag_hdlr = false,
+  test_runner = "richgo",
 })
-
 return require("go.lsp").config()

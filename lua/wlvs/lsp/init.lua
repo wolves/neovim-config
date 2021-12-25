@@ -36,5 +36,6 @@ local options = {
   },
 }
 
+require("wlvs.lsp.lsp-signature")
 require("wlvs.lsp.null-ls").setup(options)
 require("wlvs.lsp.install").setup(servers, options)

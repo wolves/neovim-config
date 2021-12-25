@@ -3,6 +3,13 @@ if not status_ok then
   return
 end
 
+local error_red = "#F44747"
+local warning_orange = "#ff8800"
+local info_yellow = "#FFCC66"
+local hint_blue = "#4FC1FF"
+local perf_purple = "#7C3AED"
+-- local note_green = '#10B981'
+
 todocomments.setup({
   signs = true, -- show icons in the signs column
   sign_priority = 8, -- sign priority
@@ -10,15 +17,15 @@ todocomments.setup({
   keywords = {
     FIX = {
       icon = " ", -- icon used for the sign, and in search results
-      color = "error", -- can be a hex color, or a named color (see below)
+      color = error_red, -- can be a hex color, or a named color (see below)
       alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
       -- signs = false, -- configure signs for some keywords individually
     },
-    TODO = { icon = " ", color = "info", alt = { "WIP" } },
-    HACK = { icon = " ", color = "warning" },
-    WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-    PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-    NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+    TODO = { icon = " ", color = hint_blue, alt = { "WIP" } },
+    HACK = { icon = " ", color = warning_orange },
+    WARN = { icon = " ", color = warning_orange, alt = { "WARNING", "XXX" } },
+    PERF = { icon = " ", color = perf_purple, alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+    NOTE = { icon = " ", color = info_yellow, alt = { "INFO" } },
   },
   merge_keywords = true, -- when true, custom keywords will be merged with the defaults
   -- highlighting of the line containing the todo comment
@@ -36,13 +43,13 @@ todocomments.setup({
   },
   -- list of named colors where we try to extract the guifg from the
   -- list of hilight groups or use the hex color if hl not found as a fallback
-  colors = {
-    error = { "LspDiagnosticsDefaultError", "ErrorMsg", "#DC2626" },
-    warning = { "LspDiagnosticsDefaultWarning", "WarningMsg", "#FBBF24" },
-    info = { "LspDiagnosticsDefaultInformation", "#2563EB" },
-    hint = { "LspDiagnosticsDefaultHint", "#10B981" },
-    default = { "Identifier", "#7C3AED" },
-  },
+  -- colors = {
+  --   error = { "LspDiagnosticsDefaultError", "ErrorMsg", "#DC2626" },
+  --   warning = { "LspDiagnosticsDefaultWarning", "WarningMsg", "#FBBF24" },
+  --   info = { "LspDiagnosticsDefaultInformation", "#2563EB" },
+  --   hint = { "LspDiagnosticsDefaultHint", "#10B981" },
+  --   default = { "Identifier", "#7C3AED" },
+  -- },
   search = {
     command = "rg",
     args = {

@@ -56,22 +56,24 @@ return packer.startup(function(use)
   use("lewis6991/impatient.nvim")
   use("lukas-reineke/indent-blankline.nvim")
   use("antoinemadec/FixCursorHold.nvim") -- This is needed to fix lsp doc highlight
-  use("folke/lsp-trouble.nvim")
   use("folke/todo-comments.nvim")
   use("folke/which-key.nvim")
+  use("folke/zen-mode.nvim")
+  -- use("preservim/vim-pencil")
+  use("norcalli/nvim-colorizer.lua")
+  use("ThePrimeagen/harpoon")
+  use("blackCauldron7/surround.nvim")
   use("karb94/neoscroll.nvim")
-
+  use("rcarriga/nvim-notify")
   use({
-    "rcarriga/nvim-notify",
-    config = function()
-      vim.notify = require("notify")
-    end,
+    "iamcco/markdown-preview.nvim",
+    run = "cd app && npm install",
+    ft = "markdown",
   })
 
   -- Colors
   use("folke/tokyonight.nvim")
   use("rebelot/kanagawa.nvim")
-  use("norcalli/nvim-colorizer.lua")
 
   -- cmp plugins
   use("hrsh7th/nvim-cmp") -- The completion plugin
@@ -95,13 +97,11 @@ return packer.startup(function(use)
   use("tamago324/nlsp-settings.nvim") -- language server settings defined in json for
   use("jose-elias-alvarez/nvim-lsp-ts-utils")
   use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
+  use({ "folke/trouble.nvim", cmd = "TroubleToggle" })
   use({
     "RRethy/vim-illuminate",
     event = "CursorHold",
     module = "illuminate",
-    config = function()
-      vim.g.Illuminate_delay = 1000
-    end,
   })
 
   -- Telescope
@@ -112,16 +112,26 @@ return packer.startup(function(use)
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
   })
-
   use("JoosepAlviste/nvim-ts-context-commentstring")
+  use("ChristianChiarulli/nvim-ts-rainbow")
+  use("nvim-treesitter/playground")
+  use("windwp/nvim-ts-autotag")
+  use("romgrk/nvim-treesitter-context")
 
   -- Git
   use("lewis6991/gitsigns.nvim")
   use("TimUntersberger/neogit")
+  use("f-person/git-blame.nvim")
+
+  -- DAP - Debugging
+  -- TODO: Install and get integrated with delve for Go
+  -- use "mfussenegger/nvim-dap"
+  -- use "theHamsta/nvim-dap-virtual-text"
+  -- use "rcarriga/nvim-dap-ui"
+  -- use "Pocco81/DAPInstall.nvim"
 
   -- Vim
   use("AndrewRadev/splitjoin.vim")
-  use("tpope/vim-surround")
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

@@ -60,9 +60,12 @@ keymap("x", "K", ":move '<-2<CR>gv-gv", opts)
 keymap("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
--- -- Comment
--- keymap("n", "<leader>/", "<cmd>lua require('Comment').toggle()<CR>", opts)
--- keymap("v", "<leader>/", ":lua require(\"Comment.api\").gc(vim.fn.visualmode())<cr>", opts)
---
--- -- Nvimtree
--- keymap("n", "<leader>e", ":NvimTreeToggle<cr>", opts)
+-- Custom
+keymap("n", "<esc><esc>", "<cmd>nohlsearch<CR>", opts)
+keymap("n", "<TAB>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+keymap("n", "<F2>", "<cmd>TSPlaygroundToggle<CR>", opts)
+keymap("n", "<C-p>", "<cmd>lua require('wlvs.telescope').telescope_files()<CR>", opts)
+keymap("n", "<C-s>", "<cmd>vsplit<CR>", opts)
+keymap("n", "<C-n>", ":e ~/notes/<CR>", opts)
+
+keymap("i", "<C-c>", "<ESC>", opts)

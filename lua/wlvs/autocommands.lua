@@ -1,4 +1,4 @@
-vim.cmd [[
+vim.cmd([[
   augroup _general_settings
     autocmd!
     autocmd FocusGained * :checktime
@@ -30,7 +30,7 @@ vim.cmd [[
     autocmd!
     autocmd VimResized * tabdo wincmd = 
   augroup end
-]]
+]])
 
 -- augroup _go
 --   autocmd!
@@ -41,9 +41,5 @@ vim.cmd [[
 -- Import on save
 -- vim.api.nvim_exec([[ autocmd BufWritePre *.go :silent! lua require('go.format').goimport() ]], false)
 
-  -- vim.cmd("autocmd FileType go nmap <Leader><Leader>l GoLint")
-  -- vim.cmd("autocmd FileType go nmap <Leader>gc :lua require('go.comment').gen()")
-
-  -- vim.cmd("autocmd FileType go,gomod nmap <buffer><silent> <Leader>tt :GoTest ./... -v -cover<CR>:setf GoTest<CR>:resize +5<CR>")
-  -- vim.cmd("autocmd FileType go,gomod nmap <buffer><silent> <Leader>tf :GoTestFile -v -cover<CR>:setf GoTest<CR>:resize +5<CR>")
-  -- vim.cmd("autocmd FileType go,gomod nmap <buffer><silent> <Leader>tr :GoTest ./... -v -cover -race<CR>:setf GoTest<CR>:resize +5<CR>")
+-- vim.cmd("autocmd FileType go nmap <Leader><Leader>l GoLint")
+-- vim.cmd("autocmd FileType go nmap <Leader>gc :lua require('go.comment').gen()")
