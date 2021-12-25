@@ -191,10 +191,10 @@ local mappings = {
     name = "Terminal",
     b = { "<cmd>lua _BTM_TOGGLE()<CR>", "Btm" },
     f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
-    g = { "<cmd>lua _GO_RUN_TESTS()<CR>", "Go Test" },
-    r = { "<cmd>lua _GO_RUN_RACE_TESTS()<CR>", "Go Race Test" },
     h = { "<cmd>ToggleTerm size=12 direction=horizontal<cr>", "Horizontal" },
     v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
+    t = { "<cmd>lua _GO_RUN_TESTS()<CR>", "Go Test" },
+    r = { "<cmd>lua _GO_RUN_RACE_TESTS()<CR>", "Go Race Test" },
   },
 }
 
