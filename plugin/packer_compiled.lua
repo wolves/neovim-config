@@ -241,6 +241,11 @@ _G.packer_plugins = {
     path = "/Users/cstingl/.local/share/nvim/site/pack/packer/start/nvim-treesitter-context",
     url = "https://github.com/romgrk/nvim-treesitter-context"
   },
+  ["nvim-treesitter-textobjects"] = {
+    loaded = true,
+    path = "/Users/cstingl/.local/share/nvim/site/pack/packer/start/nvim-treesitter-textobjects",
+    url = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
+  },
   ["nvim-ts-autotag"] = {
     loaded = true,
     path = "/Users/cstingl/.local/share/nvim/site/pack/packer/start/nvim-ts-autotag",
@@ -296,6 +301,11 @@ _G.packer_plugins = {
     path = "/Users/cstingl/.local/share/nvim/site/pack/packer/start/surround.nvim",
     url = "https://github.com/blackCauldron7/surround.nvim"
   },
+  ["symbols-outline.nvim"] = {
+    loaded = true,
+    path = "/Users/cstingl/.local/share/nvim/site/pack/packer/start/symbols-outline.nvim",
+    url = "https://github.com/simrat39/symbols-outline.nvim"
+  },
   ["telescope.nvim"] = {
     loaded = true,
     path = "/Users/cstingl/.local/share/nvim/site/pack/packer/start/telescope.nvim",
@@ -335,6 +345,11 @@ _G.packer_plugins = {
     only_cond = false,
     path = "/Users/cstingl/.local/share/nvim/site/pack/packer/opt/vim-illuminate",
     url = "https://github.com/RRethy/vim-illuminate"
+  },
+  ["vim-pencil"] = {
+    loaded = true,
+    path = "/Users/cstingl/.local/share/nvim/site/pack/packer/start/vim-pencil",
+    url = "https://github.com/preservim/vim-pencil"
   },
   ["vim-test"] = {
     loaded = true,
