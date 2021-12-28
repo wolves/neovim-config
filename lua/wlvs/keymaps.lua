@@ -62,7 +62,7 @@ keymap("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
 -- Custom
 keymap("n", "<esc><esc>", "<cmd>nohlsearch<CR>", opts)
-keymap("n", "<TAB>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+-- keymap("n", "<TAB>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 keymap("n", "<F2>", "<cmd>TSPlaygroundToggle<CR>", opts)
 keymap("n", "<C-p>", "<cmd>lua require('wlvs.telescope').telescope_files()<CR>", opts)
 keymap("n", "<C-s>", "<cmd>vsplit<CR>", opts)
