@@ -30,6 +30,11 @@ vim.cmd([[
     autocmd!
     autocmd VimResized * tabdo wincmd = 
   augroup end
+
+  augroup _ul_test_runner
+    au!
+    au BufWritePost *.go UltestNearest
+  augroup end
 ]])
 
 -- augroup _go

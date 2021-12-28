@@ -123,6 +123,9 @@ return packer.startup(function(use)
   use("TimUntersberger/neogit")
   use("f-person/git-blame.nvim")
 
+  -- Testing
+  use({ "rcarriga/vim-ultest", requires = { "vim-test/vim-test" }, run = ":UpdateRemotePlugins" })
+
   -- DAP - Debugging
   -- TODO: Install and get integrated with delve for Go
   -- use "mfussenegger/nvim-dap"
