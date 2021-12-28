@@ -97,6 +97,7 @@ return packer.startup(function(use)
   use("tamago324/nlsp-settings.nvim") -- language server settings defined in json for
   use("jose-elias-alvarez/nvim-lsp-ts-utils")
   use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
+  use("simrat39/symbols-outline.nvim")
   use({ "folke/trouble.nvim", cmd = "TroubleToggle" })
   use({
     "RRethy/vim-illuminate",
@@ -112,6 +113,7 @@ return packer.startup(function(use)
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
   })
+  use("nvim-treesitter/nvim-treesitter-textobjects")
   use("JoosepAlviste/nvim-ts-context-commentstring")
   use("ChristianChiarulli/nvim-ts-rainbow")
   use("nvim-treesitter/playground")
