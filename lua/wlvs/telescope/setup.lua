@@ -3,9 +3,9 @@ if not status_ok then
   return
 end
 
-local actions = require "telescope.actions"
+local actions = require("telescope.actions")
 
-telescope.setup {
+telescope.setup({
   defaults = {
     prompt_prefix = " ❯ ",
     -- selection_caret = " ",
@@ -15,13 +15,13 @@ telescope.setup {
     -- selection_caret = " ",
     path_display = { "smart" },
     file_ignore_patterns = {
-      'node_modules',
-      '%.jpg',
-      '%.jpeg',
-      '%.png',
-      '%.svg',
-      '%.otf',
-      '%.ttf',
+      "node_modules",
+      "%.jpg",
+      "%.jpeg",
+      "%.png",
+      "%.svg",
+      "%.otf",
+      "%.ttf",
     },
 
     mappings = {
@@ -105,43 +105,6 @@ telescope.setup {
     -- }
     -- please take a look at the readme of the extension you want to configure
   },
-}
+})
 
-local M = {}
-
-function M.telescope_files()
-  local options = {
-    path_display = {"smart"},
-    layout_strategy = 'horizontal',
-    layout_config = { preview_width = 0.50 },
-  }
-
-  if vim.fn.isdirectory '.git' ~= 0 then
-    require("telescope.builtin").git_files(options)
-  else
-    require("telescope.builtin").find_files(options)
-  end
-end
-
-function M.grep_prompt()
-  require("telescope.builtin").grep_string {
-    path_display = { "shorten" },
-    search = vim.fn.input "Grep String ❱ ",
-  }
-end
-
-function M.grep_word()
-  require("telescope.builtin").grep_string {
-    path_display = { "shorten" },
-    search = vim.fn.expand('<cword>'),
-  }
-end
-
-function M.help_tags()
-  require("telescope.builtin").help_tags {
-    show_version = true,
-  }
-end
-
-return M
-
+_ = telescope.load_extension("projects")
