@@ -9,7 +9,7 @@ local info_yellow = "#FFCC66"
 local hint_blue = "#4FC1FF"
 local perf_purple = "#7C3AED"
 
-local kana_colors = require("kanagawa").colors
+local kana_colors = require("kanagawa.colors").setup()
 local refactor_clr = kana_colors.oniViolet
 todocomments.setup({
   signs = true, -- show icons in the signs column
