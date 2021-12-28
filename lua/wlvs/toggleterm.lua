@@ -4,6 +4,9 @@ if not status_ok then
 end
 
 local util = require("util")
+local round = function(num)
+  return math.floor(num + 0.5)
+end
 
 toggleterm.setup({
   size = 12,
@@ -20,7 +23,11 @@ toggleterm.setup({
   shell = vim.o.shell,
   float_opts = {
     border = "curved",
-    winblend = 8,
+    height = round(vim.opt.lines:get() * 0.9),
+    width = round(vim.opt.columns:get() * 0.45),
+    col = vim.opt.columns:get() * 0.54,
+    row = vim.opt.lines:get() * 0.05,
+    winblend = 6,
     highlights = {
       border = "Normal",
       background = "Normal",
