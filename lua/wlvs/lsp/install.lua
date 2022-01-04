@@ -16,14 +16,18 @@ function M.install_missing(servers)
   end
 end
 
-function M.setup(servers, options)
+function M.setup(servers)
   local status_ok, lspi = pcall(require, "nvim-lsp-installer")
   if not status_ok then
     return
   end
 
   lspi.on_server_ready(function(server)
-    local opts = vim.tbl_deep_extend("force", options, servers[server.name] or {})
+    local opts = require("wlvs.lsp").get_server_config(server)
+
+    if server.name == "gopls" then
+      opts.flags = { allow_incremental_sync = true, debounce_text_changes = 200 }
+    end
 
     server:setup(opts)
     vim.cmd([[ do User LspAttachBuffers ]])

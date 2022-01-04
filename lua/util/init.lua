@@ -1,3 +1,8 @@
+-- selene: allow(global_usage)
+_G.dump = function(...)
+  print(vim.inspect(...))
+end
+
 local M = {}
 
 M.functions = {}
@@ -29,7 +34,6 @@ local map = function(mode, key, cmd, opts, defaults)
     return vim.api.nvim_set_keymap(mode, key, cmd, opts)
   end
 end
-
 
 function M.map(mode, key, cmd, opt, defaults)
   return map(mode, key, cmd, opt, defaults)
@@ -90,4 +94,3 @@ function M.info(msg, name)
 end
 
 return M
-

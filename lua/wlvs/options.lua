@@ -1,3 +1,32 @@
+-- vim.opt. them directly if they are installed, otherwise disable them. To avoid the then
+-- runtime check cost, which can be slow.
+-- Python This must be here becasue it makes loading vim VERY SLOW otherwise
+vim.g.python_host_skip_check = 1
+-- Disable python2 provider
+vim.g.loaded_python_provider = 0
+
+vim.g.python3_host_skip_check = 1
+
+if vim.fn.executable("python3") == 1 then
+  vim.g.python3_host_prog = vim.fn.exepath("python3")
+else
+  vim.g.loaded_python3_provider = 0
+end
+
+if vim.fn.executable("neovim-node-host") == 1 then
+  vim.g.node_host_prog = vim.fn.exepath("neovim-node-host")
+else
+  vim.g.loaded_node_provider = 0
+end
+
+if vim.fn.executable("neovim-ruby-host") == 1 then
+  vim.g.ruby_host_prog = vim.fn.exepath("neovim-ruby-host")
+else
+  vim.g.loaded_ruby_provider = 0
+end
+
+vim.g.loaded_perl_provider = 0
+
 local options = {
   backup = false, -- creates a backup file
   clipboard = "unnamedplus", -- allows neovim to access the system clipboard
@@ -9,7 +38,7 @@ local options = {
   visualbell = false,
   fileencoding = "utf-8", -- the encoding written to a file
   hidden = true, -- allow modified buffers to be hidden
-  hlsearch = true, -- highlight all matches on previous search pattern
+  hlsearch = false, -- highlight all matches on previous search pattern
   ignorecase = true, -- ignore case in search patterns
   inccommand = "split", -- real time preview of substitution commands
   mouse = "a", -- allow the mouse to be used in neovim
@@ -25,7 +54,7 @@ local options = {
   timeoutlen = 100, -- time to wait for a mapped sequence to complete (in milliseconds)
   undodir = "/Users/cstingl/.vim/undodir",
   undofile = true, -- enable persistent undo
-  updatetime = 300, -- faster completion (4000ms default)
+  updatetime = 50, -- faster completion (4000ms default)
   writebackup = false, -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
   expandtab = true, -- convert tabs to spaces
   shiftwidth = 2, -- the number of spaces inserted for each indentation
@@ -38,9 +67,9 @@ local options = {
   signcolumn = "yes", -- always show the sign column, otherwise it would shift the text each time
   wildmode = "longest:full,full",
   wrap = false, -- display lines as one long line
-  scrolloff = 8, -- is one of my fav
-  sidescrolloff = 8,
-  guifont = "monospace:h17", -- the font used in graphical neovim applications
+  scrolloff = 10, -- is one of my fav
+  sidescrolloff = 10,
+  guifont = "Hack Nerd Font Mono:h14", -- the font used in graphical neovim applications
 }
 
 vim.opt.shortmess:append("c")

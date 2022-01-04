@@ -11,7 +11,11 @@ function M.setup(options)
 		save_after_format = false,
 		sources = {
 			nls.builtins.formatting.prettierd,
-			nls.builtins.formatting.stylua,
+			nls.builtins.formatting.stylua.with({
+        condition = function(utils)
+            return utils.root_has_file("stylua.toml")
+        end,
+    }),
 			nls.builtins.formatting.fixjson.with({ filetypes = { "jsonc" } }),
 			nls.builtins.formatting.eslint_d,
 			nls.builtins.diagnostics.markdownlint,

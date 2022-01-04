@@ -1,5 +1,6 @@
 local fn = vim.fn
 
+-- fn.setenv("MACOSX_DEPLOYMENT_TARGET", "10.15")
 -- Automatically install packer
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
@@ -40,11 +41,17 @@ packer.init({
 
 -- Install your plugins here
 return packer.startup(function(use)
-  -- My plugins here
   use("wbthomason/packer.nvim") -- Have packer manage itself
   use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
   use("nvim-lua/plenary.nvim") -- Useful lua functions used ny lots of plugins
-  use("windwp/nvim-autopairs") -- Autopairs, integrates with both cmp and treesitter
+
+  use("lewis6991/impatient.nvim")
+
+  -- Startup
+  -- use({ "tweekmonster/startuptime.vim", cmd = "StartupTime" })
+  use({ "dstein64/vim-startuptime", cmd = "StartupTime", config = [[vim.g.startuptime_tries = 10]] })
+
+  --
   use("numToStr/Comment.nvim") -- Easily comment stuff
   use("kyazdani42/nvim-web-devicons")
   use("kyazdani42/nvim-tree.lua") -- Better explorer
@@ -52,39 +59,48 @@ return packer.startup(function(use)
   use("moll/vim-bbye")
   use("nvim-lualine/lualine.nvim")
   use("akinsho/toggleterm.nvim")
-  use("ahmedkhalf/project.nvim")
-  use("lewis6991/impatient.nvim")
-  use("lukas-reineke/indent-blankline.nvim")
-  use("antoinemadec/FixCursorHold.nvim") -- This is needed to fix lsp doc highlight
+  use({
+    "lukas-reineke/indent-blankline.nvim",
+    event = "BufReadPre",
+    config = function()
+      require("wlvs.indentline")
+    end,
+  })
+  use({
+    "antoinemadec/FixCursorHold.nvim",
+    run = function()
+      vim.g.curshold_updatime = 1000
+    end,
+  }) -- This is needed to fix lsp doc highlight
   use("folke/todo-comments.nvim")
   use("folke/which-key.nvim")
-  use("folke/zen-mode.nvim")
-  use("preservim/vim-pencil")
-  use("norcalli/nvim-colorizer.lua")
   use("ThePrimeagen/harpoon")
+  use("windwp/nvim-autopairs") -- Autopairs, integrates with both cmp and treesitter
   use("blackCauldron7/surround.nvim")
   use("karb94/neoscroll.nvim")
   use("rcarriga/nvim-notify")
-  use({
-    "iamcco/markdown-preview.nvim",
-    run = "cd app && npm install",
-    ft = "markdown",
-  })
 
   -- Colors
   use("folke/tokyonight.nvim")
   use("rebelot/kanagawa.nvim")
+  use({
+    "norcalli/nvim-colorizer.lua",
+    event = "BufReadPre",
+    config = function()
+      require("wlvs.colorizer")
+    end,
+  })
 
-  -- cmp plugins
-  use("hrsh7th/nvim-cmp") -- The completion plugin
-  use("hrsh7th/cmp-nvim-lsp")
+  -- Completion
+  use("hrsh7th/nvim-cmp")
+  use({ "hrsh7th/cmp-nvim-lsp", after = "nvim-lspconfig" })
   use("hrsh7th/cmp-nvim-lua")
-  use("hrsh7th/cmp-buffer") -- buffer completions
-  use("hrsh7th/cmp-path") -- path completions
-  use("hrsh7th/cmp-cmdline") -- cmdline completions
-  use("saadparwaiz1/cmp_luasnip") -- snippet completions
+  use("hrsh7th/cmp-buffer")
+  use("hrsh7th/cmp-path")
+  -- use("hrsh7th/cmp-cmdline")
+  use("saadparwaiz1/cmp_luasnip")
 
-  -- snippets
+  -- Snippets
   use("L3MON4D3/LuaSnip") --snippet engine
   use("rafamadriz/friendly-snippets") -- a bunch of snippets to use
 
@@ -92,21 +108,95 @@ return packer.startup(function(use)
   use("ray-x/go.nvim")
 
   -- LSP
-  use("neovim/nvim-lspconfig") -- enable LSP
-  use("williamboman/nvim-lsp-installer") -- simple to use language server installer
+  use({
+    "neovim/nvim-lspconfig",
+    config = function()
+      require("wlvs.lsp")
+    end,
+    requires = {
+      "jose-elias-alvarez/nvim-lsp-ts-utils",
+      "jose-elias-alvarez/null-ls.nvim",
+      "folke/lua-dev.nvim",
+      "williamboman/nvim-lsp-installer",
+    },
+  }) -- enable LSP
+  use({
+    "williamboman/nvim-lsp-installer",
+    requires = "nvim-lspconfig",
+    config = function()
+      local servers = require("wlvs.lsp").servers()
+      require("wlvs.lsp.install").setup(servers)
+    end,
+  }) -- simple to use language server installer
   use("tamago324/nlsp-settings.nvim") -- language server settings defined in json for
   use("jose-elias-alvarez/nvim-lsp-ts-utils")
   use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
   use("simrat39/symbols-outline.nvim")
   use({ "folke/trouble.nvim", cmd = "TroubleToggle" })
+  use("RRethy/vim-illuminate")
+
   use({
-    "RRethy/vim-illuminate",
-    event = "CursorHold",
-    module = "illuminate",
+    "ray-x/lsp_signature.nvim",
+    config = function()
+      require("wlvs.lsp.lsp-signature")
+    end,
   })
 
   -- Telescope
-  use("nvim-telescope/telescope.nvim")
+  use({
+    "nvim-telescope/telescope.nvim",
+    requires = {
+      "nvim-lua/popup.nvim",
+      "nvim-lua/plenary.nvim",
+    },
+  })
+
+  use({
+    "nvim-telescope/telescope-packer.nvim",
+    after = "telescope.nvim",
+    config = function()
+      require("telescope").load_extension("packer")
+    end,
+  })
+  use({
+    "ahmedkhalf/project.nvim",
+    after = "telescope.nvim",
+    config = function()
+      require("wlvs.projects")
+      require("telescope").load_extension("projects")
+    end,
+  })
+  use({
+    "nvim-telescope/telescope-fzf-native.nvim",
+    run = "make",
+    after = "telescope.nvim",
+    config = function()
+      require("telescope").load_extension("fzf")
+    end,
+  })
+  use({
+    "nvim-telescope/telescope-frecency.nvim",
+    ensure_dependencies = true,
+    after = "telescope.nvim",
+    requires = "tami5/sqlite.lua",
+    config = function()
+      require("telescope").load_extension("frecency")
+    end,
+  })
+  use({
+    "mrjones2014/dash.nvim",
+    run = "make install",
+    after = "telescope.nvim",
+  })
+  use({
+    "nvim-telescope/telescope-cheat.nvim",
+    ensure_dependencies = true,
+    after = "telescope.nvim",
+    requires = "tami5/sqlite.lua",
+    config = function()
+      require("telescope").load_extension("cheat")
+    end,
+  })
 
   -- Treesitter
   use({
@@ -116,17 +206,22 @@ return packer.startup(function(use)
   use("nvim-treesitter/nvim-treesitter-textobjects")
   use("JoosepAlviste/nvim-ts-context-commentstring")
   use("ChristianChiarulli/nvim-ts-rainbow")
-  use("nvim-treesitter/playground")
+  use({ "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" })
   use("windwp/nvim-ts-autotag")
-  use("romgrk/nvim-treesitter-context")
+  --use("romgrk/nvim-treesitter-context")
 
   -- Git
   use("lewis6991/gitsigns.nvim")
-  use("TimUntersberger/neogit")
+  use({ "TimUntersberger/neogit", cmd = "Neogit" })
   use("f-person/git-blame.nvim")
 
   -- Testing
-  use({ "rcarriga/vim-ultest", requires = { "vim-test/vim-test" }, run = ":UpdateRemotePlugins" })
+  use({
+    "rcarriga/vim-ultest",
+    wants = "vim-test",
+    requires = { "vim-test/vim-test" },
+    run = ":UpdateRemotePlugins",
+  })
 
   -- DAP - Debugging
   -- TODO: Install and get integrated with delve for Go
@@ -137,6 +232,26 @@ return packer.startup(function(use)
 
   -- Vim
   use("AndrewRadev/splitjoin.vim")
+
+  -- Writing
+  use({
+    "folke/zen-mode.nvim",
+    ft = "markdown",
+    ensure_dependencies = true,
+    requires = {
+      "preservim/vim-pencil",
+    },
+    config = function()
+      require("wlvs.zen-mode")
+    end,
+  })
+
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = "cd app && npm install",
+    ft = "markdown",
+    cmd = { "MarkdownPreview" },
+  })
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

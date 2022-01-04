@@ -1,3 +1,10 @@
+local has_lsp, _ = pcall(require, "lspconfig")
+if not has_lsp then
+  return
+end
+
+-- local lspconfig_util = require("lspconfig.util")
+
 require("wlvs.lsp.diagnostics").setup()
 require("wlvs.lsp.kind").setup()
 
@@ -26,16 +33,32 @@ local servers = {
   yamlls = {},
 }
 
-local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local M = {}
 
-local options = {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  flags = {
-    debounce_text_changes = 150,
-  },
-}
+M.servers = function()
+  return servers
+end
 
-require("wlvs.lsp.lsp-signature")
-require("wlvs.lsp.null-ls").setup(options)
-require("wlvs.lsp.install").setup(servers, options)
+require("lua-dev").setup()
+
+M.get_server_config = function(server)
+  local nvim_lsp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+  local conf = servers[server.name] or {}
+  local conf_type = type(conf)
+  local config = conf_type == "table" and conf or conf_type == "function" and conf() or {}
+
+  if nvim_lsp_ok then
+    config.capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  end
+
+  config.on_attach = on_attach
+  config.capabilities = config.capabilities or vim.lsp.protocol.make_client_capabilities()
+  config.flags = { debounce_text_changes = 200 }
+
+  return config
+end
+
+-- require("wlvs.lsp.lsp-signature")
+require("wlvs.lsp.null-ls").setup(M.get_server_config({}))
+
+return M

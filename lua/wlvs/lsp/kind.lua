@@ -1,34 +1,47 @@
 local M = {}
 
 M.icons = {
-  Class = " ",
+  Class = " ",
   Color = " ",
   Constant = " ",
   Constructor = " ",
-  Enum = "了 ",
+  Enum = " ",
   EnumMember = " ",
   Field = " ",
-  File = " ",
+  File = " ",
   Folder = " ",
   Function = " ",
-  Interface = "ﰮ ",
+  Interface = " ",
   Keyword = " ",
-  Method = "ƒ ",
+  Method = "m ",
   Module = " ",
   Property = " ",
   Snippet = "﬌ ",
   Struct = " ",
-  Text = " ",
-  Unit = " ",
+  Text = " ",
+  Unit = " ",
   Value = " ",
   Variable = " ",
+  Event = " ",
+  Operator = " ",
+  TypeParameter = " ",
+  Reference = " ",
 }
 
 function M.cmp_format()
-  return function(_entry, vim_item)
+  return function(entry, vim_item)
     if M.icons[vim_item.kind] then
       vim_item.kind = M.icons[vim_item.kind] .. vim_item.kind
     end
+
+    vim_item.menu = ({
+      nvim_lsp = "[lsp]",
+      luasnip = "[snip]",
+      buffer = "[buf]",
+      path = "[path]",
+      -- nvim_lua = "[api]",
+    })[entry.source.name]
+
     return vim_item
   end
 end

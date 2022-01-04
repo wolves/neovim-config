@@ -103,28 +103,23 @@ local opts = {
 }
 
 local mappings = {
-  ["b"] = {
-    "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
-    "Buffers",
-  },
   ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
   ["w"] = { "<cmd>w!<cr>", "Save" },
   ["q"] = { "<cmd>q!<cr>", "Quit" },
   ["T"] = { "<cmd>Trouble<cr>", "Trouble" },
   ["/"] = { '<cmd>lua require("Comment.api").toggle_current_linewise()<CR>', "Comment" },
-  ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
   ["P"] = { "<cmd>lua require('wlvs.telescope').telescope_projects()<cr>", "Grep string" },
   -- ["R"] = { '<cmd>lua require("renamer").rename()<cr>', "Projects" },
   ["z"] = { "<cmd>ZenMode<cr>", "Zen" },
   -- ["P"] = { "<cmd>Telescope projects<cr>", "Projects"},
-  -- b = {
-  --   name = "Buffers",
-  --   b = {
-  --     "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
-  --     "Select Buffer",
-  --   },
-  --   d = { "<cmd>Bdelete<cr>", "Delete Buffer" },
-  -- },
+  b = {
+    name = "Buffers",
+    b = {
+      "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
+      "Buffers",
+    },
+    d = { "<cmd>Bdelete!<CR>", "Close Buffer" },
+  },
   g = {
     name = "Git",
     g = { "<cmd>Neogit<cr>", "Neogit" },
@@ -136,9 +131,18 @@ local mappings = {
     s = { "<cmd>lua require('gitsigns').stage_hunk()<cr>", "Stage Hunk" },
     u = { "<cmd>lua require('gitsigns').undo_stage_hunk()<cr>", "Undo Stage Hunk" },
   },
-  h = {
+  ["h"] = {
     name = "Help",
-    ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
+    t = { "<cmd>:Telescope builtin<cr>", "Telescope" },
+    c = { "<cmd>:Telescope commands<cr>", "Commands" },
+    h = { "<cmd>:Telescope help_tags<cr>", "Help Pages" },
+    m = { "<cmd>:Telescope man_pages<cr>", "Man Pages" },
+    k = { "<cmd>:Telescope keymaps<cr>", "Key Maps" },
+    s = { "<cmd>:Telescope highlights<cr>", "Search Highlight Groups" },
+    l = { [[<cmd>TSHighlightCapturesUnderCursor<cr>]], "Highlight Groups at cursor" },
+    f = { "<cmd>:Telescope filetypes<cr>", "File Types" },
+    o = { "<cmd>:Telescope vim_options<cr>", "Options" },
+    a = { "<cmd>:Telescope autocommands<cr>", "Auto Commands" },
     p = {
       name = "Packer",
       c = { "<cmd>PackerCompile<cr>", "Packer compile" },
@@ -146,37 +150,9 @@ local mappings = {
     },
     v = { "<cmd>lua require('wlvs.telescope').help_tags()<cr>", "Help docs" },
   },
-  l = {
-    name = "lsp",
-    a = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code Action" },
-    d = { "<cmd>TroubleToggle<cr>", "Diagnostics" },
-    -- ds = { "<cmd>split | lua vim.lsp.buf.definition()<CR>", "Split Definition" },
-    -- dv = { "<cmd>vsplit | lua vim.lsp.buf.definition()<CR>", "VSplit Definition" },
-    -- f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
-    i = { "<cmd>LspInfo<cr>", "Info" },
-    j = { "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", "Next Diagnostic" },
-    k = { "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>", "Prev Diagnostic" },
-    l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
-    o = { "<cmd>SymbolsOutline<cr>", "Outline" },
-    r = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
-    R = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
-    s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
-
-    g = {
-      name = "goto",
-      -- d = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Definition" },
-      -- ds = { "<cmd>split | lua vim.lsp.buf.definition()<CR>", "Split Definition" },
-      -- dv = { "<cmd>vsplit | lua vim.lsp.buf.definition()<CR>", "VSplit Definition" },
-      -- I = { "<cmd>lua vim.lsp.buf.implementation<CR>", "Implementation" },
-      r = { "<cmd>Telescope lsp_references<CR>", "Telescope References" },
-      -- R = { "<cmd>Trouble lsp_references<CR>", "Trouble References" },
-      -- s = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature Help" },
-      -- t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Type Definition" },
-    },
-  },
   p = {
     name = "Project",
-    p = { "<cmd>Telescope projects<cr>", "Select a project" },
+    p = { "<cmd>lua require('wlvs.telescope').telescope_projects()<cr>", "Select a project" },
     s = { "<cmd>lua require('wlvs.telescope').grep_prompt()<cr>", "Grep string" },
     w = { "<cmd>lua require('wlvs.telescope').grep_word()<cr>", "Grep word" },
     g = {
@@ -188,7 +164,7 @@ local mappings = {
     t = { "<cmd>TodoTelescope<cr>", "Todo Telescope" },
   },
   t = {
-    name = "Terminal",
+    name = "Toggle",
     b = { "<cmd>lua _BTM_TOGGLE()<CR>", "Btm" },
     f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
     h = { "<cmd>ToggleTerm size=12 direction=horizontal<cr>", "Horizontal" },

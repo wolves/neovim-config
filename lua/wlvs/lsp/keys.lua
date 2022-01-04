@@ -12,9 +12,18 @@ function M.setup(client, bufnr)
   local opts = { noremap = true, silent = true, buffer = bufnr }
 
   local keymap = {
-    l = {
-      name = "lsp",
-      f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
+    c = {
+      name = "code",
+      a = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code Action" },
+      d = { "<cmd>lua vim.diagnostic.open_float()<CR>", "Line Diagnostics" },
+      r = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
+      l = {
+        name = "lsp",
+        i = { "<cmd>LspInfo<cr>", "Info" },
+        l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
+        o = { "<cmd>SymbolsOutline<cr>", "Outline" },
+        s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
+      },
     },
   }
 
@@ -27,15 +36,20 @@ function M.setup(client, bufnr)
 
   local keymap_goto = {
     name = "goto",
-    D = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
-    -- d = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Definition" },
-    i = { "<cmd>lua vim.lsp.buf.implementation<CR>", "Implementation" },
+    -- D = { "<cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
     r = { "<cmd>Telescope lsp_references<CR>", "Telescope References" },
-    -- s = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature Help" },
-    -- t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Type Definition" },
+    R = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
+    d = { "<cmd>lua vim.lsp.buf.definition()<CR>", "Definition" },
+    ds = { "<cmd>split | lua vim.lsp.buf.definition()<CR>", "Definition Split" },
+    dv = { "<cmd>vsplit | lua vim.lsp.buf.definition()<CR>", "Definition VSplit" },
+    s = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature Help" },
+    I = { "<cmd>lua vim.lsp.buf.implementation<CR>", "Implementation" },
+    t = { "<cmd>lua vim.lsp.buf.type_definition()<CR>", "Type Definition" },
   }
 
   util.nnoremap("K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+  util.nnoremap("[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
+  util.nnoremap("]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
   util.nnoremap("[e", "<cmd>lua vim.diagnostic.goto_prev({severity = vim.diagnostic.severity.ERROR})<CR>", opts)
   util.nnoremap("]e", "<cmd>lua vim.diagnostic.goto_next({severity = vim.diagnostic.severity.ERROR})<CR>", opts)
 
@@ -57,9 +71,9 @@ function M.setup(client, bufnr)
 
   -- Set some keybinds conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
-    keymap.l.f = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format Document" }
+    keymap.c.f = { "<cmd>lua vim.lsp.buf.formatting()<CR>", "Format Document" }
   elseif client.resolved_capabilities.document_range_formatting then
-    keymap_visual.l.f = { "<cmd>lua vim.lsp.buf.range_formatting()<CR>", "Format Range" }
+    keymap_visual.c.f = { "<cmd>lua vim.lsp.buf.range_formatting()<CR>", "Format Range" }
   end
 
   wk.register(keymap, { buffer = bufnr, prefix = "<leader>" })
