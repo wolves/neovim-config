@@ -205,7 +205,10 @@ return packer.startup(function(use)
   })
   use("nvim-treesitter/nvim-treesitter-textobjects")
   use("JoosepAlviste/nvim-ts-context-commentstring")
-  use("ChristianChiarulli/nvim-ts-rainbow")
+  use({
+    "ChristianChiarulli/nvim-ts-rainbow",
+    requires = "nvim-treesitter/nvim-treesitter",
+  })
   use({ "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" })
   use("windwp/nvim-ts-autotag")
   --use("romgrk/nvim-treesitter-context")

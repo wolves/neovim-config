@@ -2,7 +2,9 @@ local status_ok, configs = pcall(require, "nvim-treesitter.configs")
 if not status_ok then
   return
 end
+
 local rainbow_colors
+
 local kana_ok, kana_color = pcall(require, "kanagawa.colors")
 if kana_ok then
   rainbow_colors = {
@@ -47,7 +49,7 @@ configs.setup({
   },
   rainbow = {
     enable = true,
-    -- colors = rainbow_colors,
+    colors = rainbow_colors,
     disable = { "html" },
   },
   playground = {
