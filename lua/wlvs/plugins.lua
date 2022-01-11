@@ -48,7 +48,6 @@ return packer.startup(function(use)
   use("lewis6991/impatient.nvim")
 
   -- Startup
-  -- use({ "tweekmonster/startuptime.vim", cmd = "StartupTime" })
   use({ "dstein64/vim-startuptime", cmd = "StartupTime", config = [[vim.g.startuptime_tries = 10]] })
 
   --
