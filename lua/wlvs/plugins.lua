@@ -202,20 +202,6 @@ return packer.startup(function(use)
       require("telescope").load_extension("frecency")
     end,
   })
-  use({
-    "mrjones2014/dash.nvim",
-    run = "make install",
-    after = "telescope.nvim",
-  })
-  use({
-    "nvim-telescope/telescope-cheat.nvim",
-    ensure_dependencies = true,
-    after = "telescope.nvim",
-    requires = "tami5/sqlite.lua",
-    config = function()
-      require("telescope").load_extension("cheat")
-    end,
-  })
 
   -- Treesitter
   use({
