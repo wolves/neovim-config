@@ -51,6 +51,7 @@ return packer.startup(function(use)
   use({ "dstein64/vim-startuptime", cmd = "StartupTime", config = [[vim.g.startuptime_tries = 10]] })
 
   --
+  use("nathom/filetype.nvim")
   use("numToStr/Comment.nvim") -- Easily comment stuff
   use("kyazdani42/nvim-web-devicons")
   use("kyazdani42/nvim-tree.lua") -- Better explorer
