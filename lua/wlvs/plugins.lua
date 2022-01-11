@@ -73,7 +73,13 @@ return packer.startup(function(use)
     end,
   }) -- This is needed to fix lsp doc highlight
   use("folke/todo-comments.nvim")
-  use("folke/which-key.nvim")
+
+  use({
+    -- "folke/which-key.nvim",
+    "zeertzjq/which-key.nvim",
+    branch = "patch-1",
+  })
+
   use("ThePrimeagen/harpoon")
   use("windwp/nvim-autopairs") -- Autopairs, integrates with both cmp and treesitter
   use("blackCauldron7/surround.nvim")
