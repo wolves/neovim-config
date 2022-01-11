@@ -55,6 +55,19 @@ return packer.startup(function(use)
   use("numToStr/Comment.nvim") -- Easily comment stuff
   use("kyazdani42/nvim-web-devicons")
   use("kyazdani42/nvim-tree.lua") -- Better explorer
+
+  use({
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v1.x",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+    },
+    config = function()
+      require("wlvs/neo-tree")
+    end,
+  })
   use("akinsho/bufferline.nvim")
   use("moll/vim-bbye")
   use("nvim-lualine/lualine.nvim")
