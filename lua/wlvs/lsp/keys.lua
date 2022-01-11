@@ -28,9 +28,12 @@ function M.setup(client, bufnr)
   }
 
   local keymap_visual = {
-    l = {
-      name = "lsp",
-      a = { ":<C-U>lua vim.lsp.buf.range_code_action()<CR>", "Code Action" },
+    c = {
+      name = "code",
+      l = {
+        name = "lsp",
+        a = { ":<C-U>lua vim.lsp.buf.range_code_action()<CR>", "Code Action" },
+      },
     },
   }
 
