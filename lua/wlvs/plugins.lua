@@ -222,6 +222,10 @@ return packer.startup(function(use)
   })
   use({ "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" })
   use("windwp/nvim-ts-autotag")
+  use({
+    "andymass/vim-matchup",
+    requires = "nvim-treesitter/nvim-treesitter",
+  })
   --use("romgrk/nvim-treesitter-context")
 
   -- Git

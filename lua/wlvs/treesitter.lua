@@ -55,4 +55,7 @@ configs.setup({
   playground = {
     enable = true,
   },
+  matchup = {
+    enable = true,
+  },
 })
