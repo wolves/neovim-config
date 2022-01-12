@@ -52,6 +52,12 @@ return packer.startup(function(use)
 
   --
   use("nathom/filetype.nvim")
+  use({
+    "max397574/better-escape.nvim",
+    config = function()
+      require("wlvs.better-escape")
+    end,
+  })
   use("numToStr/Comment.nvim") -- Easily comment stuff
   use("kyazdani42/nvim-web-devicons")
   use("kyazdani42/nvim-tree.lua") -- Better explorer
