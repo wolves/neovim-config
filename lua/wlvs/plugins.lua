@@ -94,9 +94,7 @@ return packer.startup(function(use)
   use("folke/todo-comments.nvim")
 
   use({
-    -- "folke/which-key.nvim",
-    "zeertzjq/which-key.nvim",
-    branch = "patch-1",
+    "folke/which-key.nvim",
   })
 
   use("ThePrimeagen/harpoon")
@@ -117,24 +115,35 @@ return packer.startup(function(use)
   })
 
   -- Completion
-  use("hrsh7th/nvim-cmp")
-  use({ "hrsh7th/cmp-nvim-lsp", after = "nvim-lspconfig" })
-  use("hrsh7th/cmp-nvim-lua")
-  use("hrsh7th/cmp-buffer")
-  use("hrsh7th/cmp-path")
-  -- use("hrsh7th/cmp-cmdline")
-  use("saadparwaiz1/cmp_luasnip")
-
-  -- Snippets
-  use("L3MON4D3/LuaSnip") --snippet engine
-  use("rafamadriz/friendly-snippets") -- a bunch of snippets to use
+  use({
+    "hrsh7th/nvim-cmp",
+    wants = { "LuaSnip" },
+    requires = {
+      "hrsh7th/cmp-nvim-lsp",
+      -- "hrsh7th/cmp-nvim-lua",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "saadparwaiz1/cmp_luasnip",
+      {
+        "L3MON4D3/LuaSnip",
+        wants = "friendly-snippets",
+      },
+      "rafamadriz/friendly-snippets",
+    },
+  })
 
   -- Language Specific
-  use("ray-x/go.nvim")
+  use({
+    "ray-x/go.nvim",
+    commit = "22fe0379de1aed3ffa160ce3dfb62bc07e369ef7",
+  })
 
   -- LSP
   use({
     "neovim/nvim-lspconfig",
+    wants = {
+      "cmp-nvim-lsp",
+    },
     config = function()
       require("wlvs.lsp")
     end,
@@ -160,12 +169,12 @@ return packer.startup(function(use)
   use({ "folke/trouble.nvim", cmd = "TroubleToggle" })
   use("RRethy/vim-illuminate")
 
-  use({
-    "ray-x/lsp_signature.nvim",
-    config = function()
-      require("wlvs.lsp.lsp-signature")
-    end,
-  })
+  -- use({
+  --   "ray-x/lsp_signature.nvim",
+  --   config = function()
+  --     require("wlvs.lsp.lsp-signature")
+  --   end,
+  -- })
 
   -- Telescope
   use({
@@ -214,7 +223,7 @@ return packer.startup(function(use)
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
   })
-  use("nvim-treesitter/nvim-treesitter-textobjects")
+  -- use("nvim-treesitter/nvim-treesitter-textobjects")
   use("JoosepAlviste/nvim-ts-context-commentstring")
   use({
     "ChristianChiarulli/nvim-ts-rainbow",
