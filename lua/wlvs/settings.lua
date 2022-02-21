@@ -1,4 +1,11 @@
 local fn = vim.fn
+
+if vim.fn.executable("python3") == 1 then
+  vim.g.python3_host_prog = vim.fn.exepath("python3")
+else
+  vim.g.loaded_python3_provider = 0
+end
+
 -----------------------------------------------------------------------------//
 -- Message output on vim actions {{{1
 -----------------------------------------------------------------------------//
@@ -46,16 +53,16 @@ vim.opt.fillchars = {
 -- Diff {{{1
 -----------------------------------------------------------------------------//
 -- Use in vertical diff mode, blank lines to keep sides aligned, Ignore whitespace changes
-vim.opt.diffopt = vim.opt.diffopt
-  + {
-    'vertical',
-    'iwhite',
-    'hiddenoff',
-    'foldcolumn:0',
-    'context:4',
-    'algorithm:histogram',
-    'indent-heuristic',
-  }
+-- vim.opt.diffopt = vim.opt.diffopt
+--   + {
+--     'vertical',
+--     'iwhite',
+--     'hiddenoff',
+--     'foldcolumn:0',
+--     'context:4',
+--     'algorithm:histogram',
+--     'indent-heuristic',
+--   }
 -----------------------------------------------------------------------------//
 -- Format Options {{{1
 -----------------------------------------------------------------------------//
@@ -77,11 +84,11 @@ vim.opt.formatoptions = {
 -----------------------------------------------------------------------------//
 -- Folds {{{1
 -----------------------------------------------------------------------------//
-vim.opt.foldtext = 'v:lua.wlvs.folds()'
-vim.opt.foldopen = vim.opt.foldopen + 'search'
-vim.opt.foldlevelstart = 3
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.foldmethod = 'expr'
+-- vim.opt.foldtext = 'v:lua.wlvs.folds()'
+-- vim.opt.foldopen = vim.opt.foldopen + 'search'
+-- vim.opt.foldlevelstart = 3
+-- vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+-- vim.opt.foldmethod = 'expr'
 -----------------------------------------------------------------------------//
 -- Quickfix {{{1
 -----------------------------------------------------------------------------//
@@ -137,6 +144,8 @@ vim.opt.pumblend = 3 -- Make popup window translucent
 -----------------------------------------------------------------------------//
 -- Display {{{1
 -----------------------------------------------------------------------------//
+vim.opt.number = true
+vim.opt.relativenumber = true
 vim.opt.conceallevel = 2
 vim.opt.breakindentopt = 'sbr'
 vim.opt.linebreak = true -- lines wrap at words rather than random characters

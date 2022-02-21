@@ -64,7 +64,14 @@ return function()
   }
 
   wk.register({
-    h = {
+    ["w"] = { "<cmd>w!<cr>", "Save" },
+    ["q"] = { "<cmd>q!<cr>", "Quit" },
+    ["/"] = { '<cmd>lua require("Comment.api").toggle_current_linewise()<CR>', "Comment" },
+    b = {
+      name = "Buffers",
+      d = { "<cmd>Bdelete!<CR>", "Close Buffer" },
+    },
+    ["h"] = {
       name = "Help",
       p = {
         name = 'Packer',
