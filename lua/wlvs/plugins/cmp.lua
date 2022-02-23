@@ -1,6 +1,6 @@
 return function()
     local api = vim.api
-    -- local t = wlvs.replace_termcodes
+    local t = wlvs.replace_termcodes
     local cmp = require 'cmp'
     local fmt = string.format
 

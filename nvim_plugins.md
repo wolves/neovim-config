@@ -39,6 +39,7 @@
 - neogit
 - toggleterm
 - tabout
+- neoscroll
 
 
 ### FIX CONFIGS
@@ -56,7 +57,6 @@
 - harpoon
 - nvim-autopairs ???
 - surround ???
-- neoscroll
 - nvim-notify
 - nvim-colorizer
 - todo-comments
@@ -65,16 +65,17 @@
 - rust-tools
 
 - nvim-lsp-ts-utils
+-
+# Markdown
 - vim-illuminate
+- zen-mode
+- vim-pencil
+- markdown-preview
 
 TS addons
   - vim-matchup ???
 
 - git-blame
-
-- zen-mode
-- vim-pencil
-- markdown-preview
 
 
 ## Considering Adding

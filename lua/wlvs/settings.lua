@@ -275,7 +275,7 @@ end
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.wrapscan = true -- Searches wrap around the end of the file
-vim.opt.scrolloff = 9
+vim.opt.scrolloff = 6
 vim.opt.sidescrolloff = 10
 vim.opt.sidescroll = 1
 -----------------------------------------------------------------------------//
