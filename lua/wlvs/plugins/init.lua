@@ -143,32 +143,32 @@ require('packer').startup {
 
     use {
       'jose-elias-alvarez/null-ls.nvim',
-      -- requires = { 'nvim-lua/plenary.nvim' },
-      -- -- trigger loading after lspconfig has started the other servers
-      -- -- since there is otherwise a race condition and null-ls' setup would
-      -- -- have to be moved into lspconfig.lua otherwise
-      -- config = function()
-      --   local null_ls = require 'null-ls'
-      --   -- NOTE: this plugin will break if it's dependencies are not installed
-      --   null_ls.setup {
-      --     debounce = 150,
-      --     on_attach = wlvs.lsp.on_attach,
-      --     sources = {
-      --       null_ls.builtins.code_actions.gitsigns,
-      --       null_ls.builtins.formatting.stylua.with {
-      --         condition = function(_utils)
-      --           return wlvs.executable 'stylua' and _utils.root_has_file 'stylua.toml'
-      --         end,
-      --       },
-      --       null_ls.builtins.formatting.prettier.with {
-      --         filetypes = { 'html', 'json', 'yaml'}, -- , 'graphql', 'markdown' },
-      --         condition = function()
-      --           return wlvs.executable 'prettier'
-      --         end,
-      --       },
-      --     },
-      --   }
-      -- end,
+      requires = { 'nvim-lua/plenary.nvim' },
+      -- trigger loading after lspconfig has started the other servers
+      -- since there is otherwise a race condition and null-ls' setup would
+      -- have to be moved into lspconfig.lua otherwise
+      config = function()
+        local null_ls = require 'null-ls'
+        -- NOTE: this plugin will break if it's dependencies are not installed
+        null_ls.setup {
+          debounce = 150,
+          on_attach = wlvs.lsp.on_attach,
+          sources = {
+            null_ls.builtins.code_actions.gitsigns,
+            null_ls.builtins.formatting.stylua.with {
+              condition = function(_utils)
+                return wlvs.executable 'stylua' and _utils.root_has_file 'stylua.toml'
+              end,
+            },
+            null_ls.builtins.formatting.prettier.with {
+              filetypes = { 'html', 'json', 'yaml'}, -- , 'graphql', 'markdown' },
+              condition = function()
+                return wlvs.executable 'prettier'
+              end,
+            },
+          },
+        }
+      end,
     }
 
     use {
