@@ -56,7 +56,11 @@ return function()
       ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 'c' }),
       ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
       ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-      ['<C-q>'] = cmp.mapping.complete(),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<CR>'] = cmp.mapping.confirm {
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      }
     },
     formatting = {
       deprecated = true,

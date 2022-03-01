@@ -1,7 +1,7 @@
 local fn = vim.fn
 
-if vim.fn.executable("python3") == 1 then
-  vim.g.python3_host_prog = vim.fn.exepath("python3")
+if vim.fn.executable 'python3' == 1 then
+  vim.g.python3_host_prog = vim.fn.exepath 'python3'
 else
   vim.g.loaded_python3_provider = 0
 end
@@ -26,8 +26,8 @@ vim.opt.shortmess = {
 -----------------------------------------------------------------------------//
 vim.opt.updatetime = 300
 vim.opt.timeout = true
-vim.opt.timeoutlen = 500
-vim.opt.ttimeoutlen = 10
+vim.opt.timeoutlen = 400
+vim.opt.ttimeoutlen = 0
 -----------------------------------------------------------------------------//
 -- Window splitting and buffers {{{1
 -----------------------------------------------------------------------------//
@@ -67,12 +67,14 @@ vim.opt.fillchars = {
 -- Format Options {{{1
 -----------------------------------------------------------------------------//
 vim.opt.formatoptions = {
-  ['1'] = true,
-  ['2'] = true, -- Use indent from 2nd line of a paragraph
+  -- ['1'] = true,
+  ['2'] = false, -- Use indent from 2nd line of a paragraph
   q = true, -- continue comments with gq"
   c = true, -- Auto-wrap comments using textwidth
   r = true, -- Continue comments when pressing Enter
   n = true, -- Recognize numbered lists
+  o = false,
+  a = false,
   t = false, -- autowrap lines using text width value
   j = true, -- remove a comment leader when joining lines.
   -- Only break if the line was not longer than 'textwidth' when the insert
@@ -113,37 +115,26 @@ end
 vim.opt.wildmode = 'longest:full,full' -- Shows a menu bar as opposed to an enormous list
 vim.opt.wildignorecase = true -- Ignore case when completing file names and directories
 -- Binary
-vim.opt.wildignore = {
-  '*.aux',
-  '*.out',
-  '*.toc',
-  '*.o',
-  '*.obj',
-  '*.dll',
-  '*.jar',
-  '*.pyc',
-  '*.rbc',
-  '*.class',
-  '*.gif',
-  '*.ico',
-  '*.jpg',
-  '*.jpeg',
-  '*.png',
-  '*.avi',
-  '*.wav',
-  -- Temp/System
-  '*.*~',
-  '*~ ',
-  '*.swp',
-  '.lock',
-  '.DS_Store',
-  'tags.lock',
-}
+vim.opt.wildignore = [[
+.git,.hg,.svn
+*.aux,*.out,*.toc
+*.o,*.obj,*.exe,*.dll,*.jar,*.manifest,*.pyc,*.rbc,*.class
+*.ai,*.bmp,*.gif,*.ico,*.jpg,*.jpeg,*.png,*.psd,*.webp
+*.avi,*.divx,*.mp4,*.webm,*.mov,*.m2ts,*.mkv,*.vob,*.mpg,*.mpeg
+*.mp3,*.oga,*.ogg,*.wav,*.flac
+*.eot,*.otf,*.ttf,*.woff
+*.doc,*.pdf,*.cbr,*.cbz
+*.zip,*.tar.gz,*.tar.bz2,*.rar,*.tar.xz,*.kgb
+*.*~,*~ ,*.swp,.lock,.DS_Store,._*,tags.lock
+*/tmp/*,*.so,*.swp,*.zip,**/node_modules/**,**/target/**,**.terraform/**"
+]]
 vim.opt.wildoptions = 'pum'
-vim.opt.pumblend = 3 -- Make popup window translucent
+-- vim.opt.pumblend = 3 -- Make popup window translucent
+vim.opt.pumblend = 17 -- Make popup window translucent
 -----------------------------------------------------------------------------//
 -- Display {{{1
 -----------------------------------------------------------------------------//
+vim.opt.lazyredraw = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.conceallevel = 2
@@ -159,6 +150,10 @@ vim.opt.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
 --- This is used to handle markdown code blocks where the language might
 --- be set to a value that isn't equivalent to a vim filetype
 vim.g.markdown_fenced_languages = {
+  'lua',
+  'json',
+  'typescript',
+  'javascript',
   'js=javascript',
   'ts=typescript',
   'shell=sh',
@@ -179,13 +174,17 @@ vim.opt.listchars = {
 -----------------------------------------------------------------------------//
 -- Indentation
 -----------------------------------------------------------------------------//
+local indent_size = 2
 vim.opt.wrap = true
-vim.opt.wrapmargin = 2
-vim.opt.textwidth = 80
+vim.opt.wrapmargin = indent_size
+vim.opt.textwidth = 100
 vim.opt.autoindent = true
+vim.opt.cindent = true
 vim.opt.shiftround = true
 vim.opt.expandtab = true
-vim.opt.shiftwidth = 2
+vim.opt.tabstop = indent_size
+vim.opt.shiftwidth = indent_size
+vim.opt.softtabstop = indent_size
 -----------------------------------------------------------------------------//
 -- vim.o.debug = "msg"
 --- NOTE: remove this once 0.6 lands, it is now default
@@ -194,7 +193,7 @@ vim.opt.gdefault = true
 vim.opt.pumheight = 15
 vim.opt.confirm = true -- make vim prompt me to save before doing destructive things
 vim.opt.completeopt = { 'menuone', 'noselect' }
-vim.opt.hlsearch = false
+vim.opt.hlsearch = true
 vim.opt.autowriteall = true -- automatically :write before running commands and changing files
 vim.opt.clipboard = { 'unnamedplus' }
 vim.opt.laststatus = 2
@@ -219,7 +218,7 @@ vim.opt.guicursor = {
   [[a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor]],
   [[sm:block-blinkwait175-blinkoff150-blinkon175]],
 }
-
+vim.opt.cursorline = true
 vim.opt.cursorlineopt = 'screenline,number'
 -----------------------------------------------------------------------------//
 -- Title {{{1
@@ -231,6 +230,7 @@ vim.opt.titlelen = 70
 -----------------------------------------------------------------------------//
 -- Utilities {{{1
 -----------------------------------------------------------------------------//
+vim.opt.belloff = 'all'
 vim.opt.showmode = false
 vim.opt.sessionoptions = {
   'globals',
@@ -272,6 +272,7 @@ end
 -----------------------------------------------------------------------------//
 -- Match and search {{{1
 -----------------------------------------------------------------------------//
+vim.opt.incsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.wrapscan = true -- Searches wrap around the end of the file
@@ -302,4 +303,3 @@ if wlvs.executable 'nvr' then
   vim.env.EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
 end
 -- vim:foldmethod=marker
-

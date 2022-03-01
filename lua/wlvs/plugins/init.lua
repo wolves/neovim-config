@@ -17,14 +17,13 @@ wlvs.safe_require 'impatient'
 
 require('packer').startup {
   function(use, use_rocks)
-
     use { 'wbthomason/packer.nvim', opt = true }
 
     ------------------------------------------------------------------------------//
     -- Core
     ------------------------------------------------------------------------------//
     use { 'nvim-lua/plenary.nvim' }
-    use { "nvim-lua/popup.nvim" }
+    use { 'nvim-lua/popup.nvim' }
 
     ------------------------------------------------------------------------------//
     -- Keys
@@ -50,15 +49,15 @@ require('packer').startup {
       module_pattern = 'telescope.*',
       config = conf 'telescope',
       requires = {
-      {
-          "nvim-telescope/telescope-fzf-native.nvim",
-          run = "make",
-          after = "telescope.nvim",
+        {
+          'nvim-telescope/telescope-fzf-native.nvim',
+          run = 'make',
+          after = 'telescope.nvim',
           config = function()
-            require("telescope").load_extension "fzf"
+            require('telescope').load_extension 'fzf'
           end,
         },
-      {
+        {
           'nvim-telescope/telescope-frecency.nvim',
           after = 'telescope.nvim',
           requires = 'tami5/sqlite.lua',
@@ -80,9 +79,9 @@ require('packer').startup {
       local_path = 'contributing',
       wants = { 'null-ls.nvim' },
       requires = {
-      { 'p00f/nvim-ts-rainbow', after = 'nvim-treesitter' },
-      { 'nvim-treesitter/nvim-treesitter-textobjects', after = 'nvim-treesitter' },
-      {
+        { 'p00f/nvim-ts-rainbow', after = 'nvim-treesitter' },
+        { 'nvim-treesitter/nvim-treesitter-textobjects', after = 'nvim-treesitter' },
+        {
           'nvim-treesitter/playground',
           keys = '<leader>E',
           cmd = { 'TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor' },
@@ -110,11 +109,11 @@ require('packer').startup {
     ----------------------------------------------------------------------------//
     -- GIT
     -----------------------------------------------------------------------------//
-    use { "lewis6991/gitsigns.nvim", config = conf 'gitsigns' }
+    use { 'lewis6991/gitsigns.nvim', config = conf 'gitsigns' }
     use {
-      "TimUntersberger/neogit",
-      cmd = "Neogit",
-      requires = "plenary.nvim",
+      'TimUntersberger/neogit',
+      cmd = 'Neogit',
+      requires = 'plenary.nvim',
       setup = conf('neogit').setup,
       config = conf('neogit').config,
     }
@@ -161,7 +160,7 @@ require('packer').startup {
               end,
             },
             null_ls.builtins.formatting.prettier.with {
-              filetypes = { 'html', 'json', 'yaml'}, -- , 'graphql', 'markdown' },
+              filetypes = { 'html', 'json', 'yaml', 'markdown' }, -- , 'graphql', 'markdown' },
               condition = function()
                 return wlvs.executable 'prettier'
               end,
@@ -189,11 +188,11 @@ require('packer').startup {
       module = 'cmp',
       event = 'InsertEnter',
       requires = {
-      { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-lspconfig' },
-      { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
-      { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
-      { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
-        -- { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' },
+        { 'hrsh7th/cmp-nvim-lsp', after = 'nvim-lspconfig' },
+        { 'hrsh7th/cmp-path', after = 'nvim-cmp' },
+        { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },
+        { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },
+        { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' },
         -- { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },
         -- { 'f3fora/cmp-spell', after = 'nvim-cmp' },
         -- { 'petertriho/cmp-git', after = 'nvim-cmp' },
@@ -238,8 +237,8 @@ require('packer').startup {
     -- Editor
     ------------------------------------------------------------------------------//
 
-    use { "max397574/better-escape.nvim", config = conf 'better-escape' }
-    use { "akinsho/toggleterm.nvim", config = conf 'toggleterm' }
+    use { 'max397574/better-escape.nvim', config = conf 'better-escape' }
+    use { 'akinsho/toggleterm.nvim', config = conf 'toggleterm' }
     use {
       'karb94/neoscroll.nvim',
       config = function()
@@ -258,17 +257,23 @@ require('packer').startup {
     use 'kyazdani42/nvim-web-devicons'
 
     use {
-      "akinsho/bufferline.nvim",
+      'akinsho/bufferline.nvim',
       config = conf 'bufferline',
       requires = 'nvim-web-devicons',
     }
 
     use { 'moll/vim-bbye' }
 
+    use {
+      'lukas-reineke/indent-blankline.nvim',
+      event = 'BufReadPre',
+      config = conf 'blankline',
+    }
+
     -- Colors
     use {
       'rebelot/kanagawa.nvim',
-      config = conf 'colorscheme'
+      config = conf 'colorscheme',
     }
     use { 'folke/tokyonight.nvim' }
 
@@ -289,6 +294,8 @@ require('packer').startup {
         require('Comment').setup()
       end,
     }
+    use { 'windwp/nvim-autopairs', config = conf 'autopairs' }
+    use { "tpope/vim-surround" }
 
     ------------------------------------------------------------------------------//
     -- Profiling & Startup
@@ -318,16 +325,13 @@ require('packer').startup {
       end,
     }
 
-
     ------------------------------------------------------------------------------//
     -- Languages
     ------------------------------------------------------------------------------//
     use {
       'ray-x/go.nvim',
       ft = 'go',
-      config = function()
-        require('go').setup()
-      end,
+      config = conf 'go',
     }
 
     use 'plasticboy/vim-markdown'
@@ -373,7 +377,7 @@ if not vim.g.packer_compiled_loaded and vim.loop.fs_stat(PACKER_COMPILED_PATH) t
 end
 
 wlvs.augroup('PackerSetupInit', {
-{
+  {
     events = { 'BufWritePost' },
     targets = { '*/wlvs/plugins/*.lua' },
     command = function()
