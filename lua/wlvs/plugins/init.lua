@@ -77,7 +77,7 @@ require('packer').startup {
       event = 'BufReadPre',
       config = conf 'treesitter',
       local_path = 'contributing',
-      wants = { 'null-ls.nvim' },
+      -- wants = { 'null-ls.nvim' },
       requires = {
         { 'p00f/nvim-ts-rainbow', after = 'nvim-treesitter' },
         { 'nvim-treesitter/nvim-treesitter-textobjects', after = 'nvim-treesitter' },
@@ -140,35 +140,35 @@ require('packer').startup {
 
     use 'b0o/schemastore.nvim'
 
-    use {
-      'jose-elias-alvarez/null-ls.nvim',
-      requires = { 'nvim-lua/plenary.nvim' },
-      -- trigger loading after lspconfig has started the other servers
-      -- since there is otherwise a race condition and null-ls' setup would
-      -- have to be moved into lspconfig.lua otherwise
-      config = function()
-        local null_ls = require 'null-ls'
-        -- NOTE: this plugin will break if it's dependencies are not installed
-        null_ls.setup {
-          debounce = 150,
-          on_attach = wlvs.lsp.on_attach,
-          sources = {
-            null_ls.builtins.code_actions.gitsigns,
-            null_ls.builtins.formatting.stylua.with {
-              condition = function(_utils)
-                return wlvs.executable 'stylua' and _utils.root_has_file 'stylua.toml'
-              end,
-            },
-            null_ls.builtins.formatting.prettier.with {
-              filetypes = { 'html', 'json', 'yaml', 'markdown' }, -- , 'graphql', 'markdown' },
-              condition = function()
-                return wlvs.executable 'prettier'
-              end,
-            },
-          },
-        }
-      end,
-    }
+    -- use {
+    --   'jose-elias-alvarez/null-ls.nvim',
+    --   requires = { 'nvim-lua/plenary.nvim' },
+    --   -- trigger loading after lspconfig has started the other servers
+    --   -- since there is otherwise a race condition and null-ls' setup would
+    --   -- have to be moved into lspconfig.lua otherwise
+    --   config = function()
+    --     local null_ls = require 'null-ls'
+    --     -- NOTE: this plugin will break if it's dependencies are not installed
+    --     null_ls.setup {
+    --       debounce = 150,
+    --       on_attach = wlvs.lsp.on_attach,
+    --       sources = {
+    --         null_ls.builtins.code_actions.gitsigns,
+    --         null_ls.builtins.formatting.stylua.with {
+    --           condition = function(_utils)
+    --             return wlvs.executable 'stylua' and _utils.root_has_file 'stylua.toml'
+    --           end,
+    --         },
+    --         null_ls.builtins.formatting.prettier.with {
+    --           filetypes = { 'html', 'json', 'yaml', 'markdown' }, -- , 'graphql', 'markdown' },
+    --           condition = function()
+    --             return wlvs.executable 'prettier'
+    --           end,
+    --         },
+    --       },
+    --     }
+    --   end,
+    -- }
 
     use {
       'ray-x/lsp_signature.nvim',
@@ -295,7 +295,7 @@ require('packer').startup {
       end,
     }
     use { 'windwp/nvim-autopairs', config = conf 'autopairs' }
-    use { "tpope/vim-surround" }
+    use { 'tpope/vim-surround' }
 
     ------------------------------------------------------------------------------//
     -- Profiling & Startup
